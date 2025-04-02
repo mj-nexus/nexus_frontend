@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import axios from "axios"; // axios import
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { loginRequest } from "../../utils/loginUtil";
 import NexusLogo from "../../assets/NexusLogo1.png";
 import mjcLogo from "../../assets/mjcLogo.png";
 import aibigdataLogo from "../../assets/AiBigDataClear.png";
 import Toggle from "../../components/Toggle/Toggle";
 import BigButton from "../../components/Button/BigButton";
 import "./style.scss";
+import { useNavigate } from "react-router-dom";
 
 const Input = ({ label, value, onChange }) => {
   return (
@@ -21,18 +23,20 @@ const Input = ({ label, value, onChange }) => {
 };
 
 export const Login = () => {
+  const { login } = useContext(AuthContext);
   const [student_id, setStudentId] = useState(""); // 학번 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
+  const navigate = useNavigate();
+  const signUp = () => {
+    navigate('/signup')
+  }
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:5001/api/user/login", {
-        student_id,
-        password,
-      });
+      const { user, accessToken } = await loginRequest(student_id, password);
+      const userData = { user, accessToken };
+      login(userData);
 
-      console.log(response.data); // 응답 데이터 처리
-      // 로그인 성공 시 추가 동작 (예: 리디렉션, 상태 업데이트 등)
     } catch (error) {
       console.error("Error:", error);
       // 에러 처리 (예: 사용자에게 에러 메시지 표시)
@@ -60,7 +64,7 @@ export const Login = () => {
           </div>
           <BigButton onClick={handleLogin} label="로그인" width="360px" height="40px" fontSize="15px" />
           <div className="line"></div>
-          <p className="link">회원가입</p>
+          <p className="link" onClick={signUp}>회원가입</p>
         </div>
       </div>
     </div>
