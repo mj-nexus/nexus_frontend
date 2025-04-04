@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Signup.scss';
 import { useNavigate } from 'react-router-dom';
+import { SignupContext } from '../../context/SignupContext';
 
 const SignupStepTwo = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [company, setCompany] = useState('');
-  const [studentid, setStudentid] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const { userData, signupMemory } = useContext(SignupContext); // Use context
+  const [name, setName] = useState(userData.name);
+  const [phone, setPhone] = useState(userData.phone);
+  const [company, setCompany] = useState(userData.company);
+  const [studentId, setStudentId] = useState(userData.studentId);
+  const [password, setPassword] = useState(userData.password);
+  const [confirmPassword, setConfirmPassword] = useState(userData.confirmPassword);
+
   const goBack = (e) => {
     e.preventDefault();
     navigate('/signup');
@@ -18,26 +20,31 @@ const SignupStepTwo = () => {
 
   const goToNextStep = (e) => {
     e.preventDefault();
-    navigate('/signup/step3')
-    
-    if (!name || !studentid || !phone || !password || !confirmPassword) {
+  
+    if (!name || !studentId || !phone || !password || !confirmPassword) {
       alert('모든 필드를 입력해주세요.');
       return;
     }
-
+  
     if (!/^\d+$/.test(phone)) {
       alert('전화번호는 숫자만 입력해야 합니다.');
       return;
     }
-    
+  
+    if (password.length < 6) {
+      alert('비밀번호는 6자리 이상이어야 합니다.');
+      return;
+    }
+  
     if (password !== confirmPassword) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
-    
-    // 다음 단계로 이동
+  
+    signupMemory({ name, phone, company, studentId, password, confirmPassword });
     navigate('/signup/step3');
   };
+  
 
   return (
     <div className="signup-wrapper">
@@ -45,8 +52,8 @@ const SignupStepTwo = () => {
         <h2 className="signup-title">회원가입</h2>
 
         <div className="step-progress">
-          <div className="step">1</div>
-          <div className="divider"></div>
+          <div className="step active" >1</div>
+          <div className="divider active"></div>
           <div className="step active">2</div>
           <div className="divider"></div>
           <div className="step">3</div>
@@ -57,7 +64,7 @@ const SignupStepTwo = () => {
         <form className="form-container" onSubmit={goToNextStep}>
           <div className="form-row">
             <input type="text" placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} required />
-            <input type="text" placeholder="학번" value={studentid} onChange={(e) => setStudentid(e.target.value)} required />
+            <input type="text" placeholder="학번" value={studentId} onChange={(e) => setStudentId(e.target.value)} required />
           </div>
           <div className="form-row">
             <input type="text" placeholder="휴대전화" value={phone} onChange={(e) => setPhone(e.target.value)} required />

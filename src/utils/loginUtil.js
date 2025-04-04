@@ -2,15 +2,14 @@ import axios from "axios";
 
 export const loginRequest = async (student_id, password) => {
     try {
-        const respone = await axios.post(process.env.REACT_APP_BACKEN_HOST, {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/api/user/login`, {
             student_id,
             password,
         });
-        const user = respone.data.user;
-        const accessToken = respone.data.accessToken;
+        const user = response.data.user;
+        const accessToken = response.data.accessToken;
         return { user, accessToken };
-    }
-    catch(err) {
+    } catch(err) {
         console.log('login error');
         throw err;
     }

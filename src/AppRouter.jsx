@@ -13,6 +13,7 @@ import { AuthContext } from "./context/AuthContext";
 import SignUpStep1 from "./pages/signupPage/Signup";
 import SignupStepTwo from "./pages/signupPage/SignupStepTwo";
 import SignupStepThree from "./pages/signupPage/SignuupStepThree";
+import SignupStepFour from "./pages/signupPage/SignupStepFour";
 
 export const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -31,10 +32,10 @@ export const AppRouter = () => {
                 )
               }
             />
-            <Route path="/signup" element={<SignUpStep1/>}>
-            </Route>
+            <Route path="/signup" Component={SignUpStep1} />
             <Route path="/signup/step2" Component={SignupStepTwo} />
             <Route path="/signup/step3" Component={SignupStepThree} />
+            <Route path="/signup/step4" Component={SignupStepFour} />
             <Route
               path="/"
               element={

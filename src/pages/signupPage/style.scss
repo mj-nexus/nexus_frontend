@@ -1,0 +1,219 @@
+.sign-up {
+    text-align: center;
+    font-family: 'Arial, sans-serif';
+  
+    .progress-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      
+      .step {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #e0e0e0;
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.completed {
+          background-color: #4CAF50;
+          color: white;
+        }
+      }
+    }
+  
+    .skills-selection {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+  
+      .skill {
+        margin: 5px;
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: 2px solid #e0e0e0;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s;
+  
+        &.selected {
+          border-color: #4CAF50;
+          background-color: #4CAF50;
+          color: white;
+        }
+  
+        &:hover {
+          background-color: #f1f1f1;
+        }
+      }
+    }
+  
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+        &.prev {
+          background-color: #dddddd;
+        }
+        
+        &.submit {
+          background-color: #4CAF50;
+          color: white;
+        }
+        
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .signup-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f9f4;
+  }
+  
+  .signup-container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 700px;
+  }
+  
+  .signup-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .step-progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  
+    .step {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .divider {
+      width: 50px;
+      height: 4px;
+      background-color: #4CAF50;
+      margin: 0 10px;
+    }
+  }
+  
+  .skill-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    .selected-skills {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 15px;
+  
+      .selected-skill {
+        width: 180px;
+        height: 35px;
+        border: 2px solid grey;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 16px;
+        color: #333;
+        padding-left: 10px;
+      }
+    }
+  
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+  
+      .skill-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 12px;
+        border: 2px solid;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s;
+        font-size: 14px;
+        font-weight: bold;
+  
+        &.selected {
+          opacity: 0.5;
+        }
+  
+        .dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+        }
+  
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  
+      &.prev-btn {
+        background-color: white;
+        color: green;
+        border: 2px solid green;
+      }
+  
+      &.submit-btn {
+        background-color: green;
+        color: white;
+      }
+  
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  
