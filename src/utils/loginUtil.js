@@ -6,9 +6,9 @@ export const loginRequest = async (student_id, password) => {
             student_id,
             password,
         });
-        const user = response.data.user;
+        const userid = response.data.user.user_id;
         const accessToken = response.data.accessToken;
-        return { user, accessToken };
+        return { userid, accessToken };
     } catch(err) {
         console.log('login error');
         throw err;

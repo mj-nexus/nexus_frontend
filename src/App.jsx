@@ -1,4 +1,4 @@
-import { AppRouter } from "./AppRouter";
+import { AppRouter } from "./routes/AppRouter";
 import { AuthProvider } from "./context/AuthContext";
 import { SignupProvider } from "./context/SignupContext";
 

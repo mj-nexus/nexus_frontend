@@ -50,6 +50,8 @@ export const Login = () => {
           <BigButton onClick={handleLogin} label="로그인" width="360px" height="40px" fontSize="15px" />
           <div className="line"></div>
           <p className="link" onClick={goToSignUp}>회원가입</p>
+
+          <img className="mjc_mobile_logo" src={mjcLogo} alt="mjc logo" />
         </div>
       </div>
     </div>

@@ -1,0 +1,67 @@
+// src/components/board/BoardList/BoardList.module.scss
+.boardWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .boardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 24px;
+      margin: 0;
+    }
+  }
+
+  .boardTable {
+    margin: 20px 0;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+
+      th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #EFEFEF;
+      }
+
+      th {
+        background-color: #f8f8f8;
+        font-weight: bold;
+      }
+
+      tr:hover {
+        background-color: #f8f8f8;
+      }
+
+      .tag {
+        color: red;
+        font-size: 14px;
+      }
+
+      .title {
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .loading, .error {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+  }
+
+  .error {
+    color: #ff4444;
+  }
+}

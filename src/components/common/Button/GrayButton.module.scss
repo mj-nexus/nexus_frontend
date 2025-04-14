@@ -1,0 +1,18 @@
+// src/components/common/Button/GrayButton.module.scss
+.grayButton {
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #e9ecef;
+  }
+
+  &:active {
+    background-color: #dee2e6;
+  }
+}

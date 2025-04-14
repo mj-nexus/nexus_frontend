@@ -1,0 +1,235 @@
+.board-wrapper {
+    padding: 2rem;
+    background-color: #F5FAF6;
+    border-radius: 1rem;
+    font-family: 'Pretendard', sans-serif;
+    color: #111827;
+  
+    .board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+  
+      h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+      }
+  
+      .write-btn {
+        padding: 0.5rem 1.2rem;
+        background-color: #10b981;
+        color: white;
+        border: none;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+  
+        &:hover {
+          background-color: #059669;
+        }
+      }
+    }
+
+
+
+    .search-box {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+  
+      input {
+        padding: 0.5rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        width: 250px;
+  
+        &:focus {
+          outline: none;
+          border-color: #0ea300;
+          box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+      }
+    }
+  
+    .board-table {
+      overflow-x: auto;
+      background-color: white;  // 이 줄 추가
+      border-radius: 0.75rem;   // 이 줄 추가
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);  // 이 줄 추가
+
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+  
+        thead {
+          background-color: #f3f4f6;
+          font-size: 0.875rem;
+          color: #6b7280;
+  
+          th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+          }
+        }
+  
+        tbody {
+          font-size: 0.95rem;
+  
+          tr {
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+  
+            &:hover {
+              background-color: #f9fafb;
+            }
+  
+            td {
+              padding: 0.75rem 1rem;
+              background-color: white;
+            }
+  
+            .tag {
+              font-weight: 600;
+              color: #ef4444;
+            }
+  
+            .title {
+              color: #111827;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+  
+      button {
+        background: none;
+        border: none;
+        color: #6b7280;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: color 0.2s;
+  
+        &:hover {
+          color: #10b981;
+        }
+      }
+  
+      span {
+        color: #9ca3af;
+      }
+    }
+  }
+// BoardList.module.scss에 기존 코드는 그대로 두고 아래 내용을 추가
+
+@media screen and (max-width: 768px) {
+  .board-wrapper {
+    padding: 1rem;
+
+    .board-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .search-box {
+      width: 100%;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .board-table {
+      table {
+        thead {
+          display: none; // 모바일에서는 헤더 숨김
+        }
+
+        tbody {
+          tr {
+            display: block;
+            padding: 1rem 0.5rem;
+            position: relative;
+
+            &:not(:last-child) {
+              border-bottom: 1px solid #e5e7eb;
+            }
+
+            td {
+              display: block;
+              padding: 0.25rem 0;
+              text-align: left;
+
+              &:before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 0.5rem;
+                color: #6b7280;
+              }
+
+              &.tag {
+                font-size: 0.875rem;
+                margin-bottom: 0.25rem;
+              }
+
+              &.title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .pagination {
+      gap: 0.25rem;
+
+      button {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .board-wrapper {
+    padding: 0.75rem;
+
+    .board-header {
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .board-table {
+      tbody {
+        tr {
+          padding: 0.75rem 0.5rem;
+
+          td {
+            font-size: 0.875rem;
+
+            &.title {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

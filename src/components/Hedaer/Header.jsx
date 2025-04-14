@@ -2,27 +2,26 @@ import React, { useEffect, useState } from "react";
 import Notification1 from "../../assets/notiIcon.png";
 import nexuslogo1 from "../../assets/NexusLogo1.png";
 import "./style.scss";
-import { useProfile } from "../../hooks/useProfile";
-import { headerinfoUtil } from "../../utils/headerinfoUtil";
+import { useAuth } from "../../context/AuthContext";
+import {getUserInfo} from "../../utils/getUserInfoUtil";
 
 export const Header = () => {
-  const { user } = useProfile();
+  const { userId } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (user && user.user_id) {
         try {
-          const data = await headerinfoUtil(user.user_id);
-          setUserInfo(data);
+          const data = await getUserInfo();
+          setUserInfo(data.Profile);
         } catch (err) {
           console.error("Error fetching user info:", err);
         }
-      }
+      
     };
 
     fetchUserInfo();
-  }, [user]);
+  }, [userId]);
 
   if (!userInfo) {
     return null; // Or render a loading indicator

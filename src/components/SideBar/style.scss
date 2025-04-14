@@ -1,6 +1,9 @@
 .sidebar {
     width: 200px; // 사이드바의 너비
-
+    position: fixed;
+    border-right: 1px solid #E6EFF5;
+    height: 100vh;
+    padding-top: 80px;
     
 
     .menu-item {
@@ -11,6 +14,7 @@
         cursor: pointer;
         position: relative;
         color: #b1b1b1; // 기본 글자색 설정
+        gap: 10px;
         .indicator {
             width: 5px; // 막대의 너비
             height: 100%; // 막대의 높이

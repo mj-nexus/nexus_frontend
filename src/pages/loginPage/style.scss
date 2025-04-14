@@ -80,6 +80,11 @@ $bg_green: #F5FAF6;
             color: #03a300;
             cursor: pointer;
         }
+        .mjc_mobile_logo {
+            display: none;
+            width: 150px;
+            margin: 20px auto 0;
+        }
     }
 
     br {
@@ -108,3 +113,63 @@ $bg_green: #F5FAF6;
         }
     }
 }
+@media (max-width: 768px) {
+    .bg {
+      flex-direction: column;
+      justify-content: center;
+  
+      .logo_bg {
+        width: 100%;
+        height: auto;
+        padding: 20px 0;
+  
+        img {
+          &:nth-of-type(1) {
+            width: 70%;
+          }
+  
+          &:nth-of-type(2),
+          &:nth-of-type(3) {
+            width: 50%;
+            position: static;
+            margin-top: 10px;
+          }
+        }
+      }
+  
+      .right {
+        width: 100%;
+        padding: 20px;
+        
+      }
+  
+      .auth_bg {
+        width: 100%;
+        padding: 10px;
+  
+        p {
+          font-size: 14pt;
+        }
+  
+        .middle {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+  
+        .line {
+          margin: 10px 0;
+        }
+        
+      }
+  
+      .input_box {
+        input {
+          width: 100%;
+          font-size: 10pt;
+        }
+      }
+    }
+    
+  }
+  
