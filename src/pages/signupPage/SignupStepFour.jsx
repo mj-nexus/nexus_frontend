@@ -16,7 +16,7 @@ const skillsList = [
   { name: 'Arduino', color: 'purple' },
 ];
 
-const SkillSelector = () => {
+export const SkillSelector = () => {
   const { userData, signupMemory, clearMemory } = useContext(SignupContext);
   const [selectedSkills, setSelectedSkills] = useState(userData.skill || []);
   const navigate = useNavigate();
@@ -90,5 +90,3 @@ const SkillSelector = () => {
     </div>
   );
 };
-
-export default SkillSelector;

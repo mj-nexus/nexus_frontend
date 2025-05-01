@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signup.scss';
 
-const Signup = () => {
+export const Signup = () => {
   const [agree, setAgree] = useState(false);
   const navigate = useNavigate();
 
@@ -69,5 +69,3 @@ const Signup = () => {
     </div>
   );
 }
-
-export default Signup;

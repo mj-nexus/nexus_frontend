@@ -8,10 +8,8 @@ import {
 import { Login } from "../pages/loginPage/Login";
 import { Home } from "../pages/Home/Home";
 import { useAuth } from "../context/AuthContext";
-import SignUpStep1 from "../pages/signupPage/Signup";
-import SignupStepTwo from "../pages/signupPage/SignupStepTwo";
-import SignupStepThree from "../pages/signupPage/SignuupStepThree";
-import SignupStepFour from "../pages/signupPage/SignupStepFour";
+import { SignUpStep1, SignUpStep2, SignUpStep3, SignUpStep4 } from "../pages/signupPage";
+
 import MainLayout from "../layouts/MainLayout";
 import { Profile } from "../pages/profile/Profile";
 
@@ -20,6 +18,7 @@ import { StudentBoard } from "../pages/BoardPage/StudentBoard";
 import { BoardWrite } from "../pages/BoardPage/BoardWrite";
 import { BoardDetail } from "../pages/BoardPage/BoardDetail";
 import { BoardEdit } from "../pages/BoardPage/BoardEdit";
+import { BoardLayout } from "../layouts/Board/BoardLayout";
 
 export const AppRouter = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -35,9 +34,9 @@ export const AppRouter = () => {
               element={isAuthenticated ? <Navigate to="/" /> : <Login />}
           />
           <Route path="/signup" element={<SignUpStep1 />} />
-          <Route path="/signup/step2" element={<SignupStepTwo />} />
-          <Route path="/signup/step3" element={<SignupStepThree />} />
-          <Route path="/signup/step4" element={<SignupStepFour />} />
+          <Route path="/signup/step2" element={<SignUpStep2 />} />
+          <Route path="/signup/step3" element={<SignUpStep3 />} />
+          <Route path="/signup/step4" element={<SignUpStep4 />} />
 
           {/* MainLayout으로 감싸진 인증된 사용자 전용 라우트 */}
           <Route
@@ -50,7 +49,7 @@ export const AppRouter = () => {
 
             {/* 게시판 관련 라우트 */}
             <Route path="board">
-              <Route index element={<StudentBoard />} /> {/* 게시글 목록 */}
+              <Route index element={<BoardLayout />} /> {/* 게시글 목록 */}
               <Route path="write" element={<BoardWrite />} /> {/* 게시글 작성 */}
               <Route path=":id" element={<BoardDetail />} /> {/* 게시글 상세 */}
               <Route path=":id/edit" element={<BoardEdit />} /> {/* 게시글 수정 */}

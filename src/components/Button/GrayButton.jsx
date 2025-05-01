@@ -2,7 +2,7 @@ export const GrayButton = (props) => {
     const lable = props.lable;
     return (
         <button
-            onClick={() => props.toggle()}
+            onClick={() => props.handleClick()}
             style={{
                 border: '1px solid #EFEFEF',
                 cursor: 'pointer',

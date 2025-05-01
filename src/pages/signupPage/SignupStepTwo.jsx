@@ -3,7 +3,7 @@ import './Signup.scss';
 import { useNavigate } from 'react-router-dom';
 import { SignupContext } from '../../context/SignupContext';
 
-const SignupStepTwo = () => {
+export const SignupStepTwo = () => {
   const navigate = useNavigate();
   const { userData, signupMemory } = useContext(SignupContext); // Use context
   const [name, setName] = useState(userData.name);
@@ -84,5 +84,3 @@ const SignupStepTwo = () => {
     </div>
   );
 };
-
-export default SignupStepTwo;

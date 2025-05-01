@@ -6,7 +6,7 @@ import { verifyCode } from "../../utils/verifycodeUtil";
 import { validateEmail } from "../../utils/validateEmail";
 import { SignupContext } from "../../context/SignupContext";
 
-const SignupStepThree = () => {
+export const SignupStepThree = () => {
   const [verificationCode, setVerificationCode] = useState("");
   const [emailError, setEmailError] = useState("");
   const [codeError, setCodeError] = useState("");
@@ -119,5 +119,3 @@ const SignupStepThree = () => {
     </div>
   );
 };
-
-export default SignupStepThree;
