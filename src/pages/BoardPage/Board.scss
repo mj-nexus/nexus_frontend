@@ -1,76 +1,116 @@
 .board-wrapper {
-    padding: 2rem;
-    background-color: #F5FAF6;
-    border-radius: 1rem;
+    padding: 2.5rem;
+    background-color: #f8faf8;
+    border-radius: 1.5rem;
     font-family: 'Pretendard', sans-serif;
-    color: #111827;
+    color: #1a1a1a;
+    max-width: 1400px;
+    margin: 0 auto;
   
     .board-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
   
       h2 {
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: 700;
+        background: linear-gradient(90deg, #0ea300, #7ed321);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 0;
+          width: 40px;
+          height: 3px;
+          background: linear-gradient(90deg, #0ea300, #7ed321);
+          border-radius: 2px;
+        }
       }
   
       .write-btn {
-        padding: 0.5rem 1.2rem;
-        background-color: #10b981;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(45deg, #0ea300, #7ed321);
         color: white;
         border: none;
-        border-radius: 0.75rem;
+        border-radius: 12px;
         cursor: pointer;
-        transition: background 0.2s ease;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 12px rgba(14, 163, 0, 0.15);
   
         &:hover {
-          background-color: #059669;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba(14, 163, 0, 0.25);
+        }
+
+        &:active {
+          transform: translateY(1px);
         }
       }
     }
 
-
-
     .search-box {
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
   
       input {
-        padding: 0.5rem 1rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.75rem;
-        width: 250px;
+        padding: 0.875rem 1.25rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        width: 300px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        background-color: white;
   
         &:focus {
           outline: none;
           border-color: #0ea300;
-          box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+          box-shadow: 0 0 0 4px rgba(14, 163, 0, 0.1);
+        }
+
+        &::placeholder {
+          color: #9ca3af;
         }
       }
     }
   
     .board-table {
       overflow-x: auto;
-      background-color: white;  // 이 줄 추가
-      border-radius: 0.75rem;   // 이 줄 추가
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);  // 이 줄 추가
-
-
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(14, 163, 0, 0.08);
+      
       table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
   
         thead {
-          background-color: #f3f4f6;
-          font-size: 0.875rem;
-          color: #6b7280;
+          background: linear-gradient(90deg, rgba(14, 163, 0, 0.03), rgba(126, 211, 33, 0.03));
+          font-size: 0.9rem;
+          color: #4b5563;
   
           th {
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.5rem;
             text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #f0f0f0;
+
+            &:first-child {
+              border-top-left-radius: 16px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 16px;
+            }
           }
         }
   
@@ -78,26 +118,44 @@
           font-size: 0.95rem;
   
           tr {
-            border-bottom: 1px solid #e5e7eb;
-            cursor: pointer;
+            transition: all 0.2s ease;
   
             &:hover {
-              background-color: #f9fafb;
+              background-color: rgba(14, 163, 0, 0.03);
+              
+              td {
+                color: #0ea300;
+              }
             }
   
             td {
-              padding: 0.75rem 1rem;
-              background-color: white;
+              padding: 1rem 1.5rem;
+              border-bottom: 1px solid #f0f0f0;
+              transition: all 0.2s ease;
             }
   
             .tag {
               font-weight: 600;
-              color: #ef4444;
+              color: #0ea300;
+              background: rgba(14, 163, 0, 0.1);
+              padding: 0.35rem 0.75rem;
+              border-radius: 20px;
+              font-size: 0.85rem;
             }
   
             .title {
-              color: #111827;
+              color: #1f2937;
               font-weight: 500;
+            }
+          }
+
+          tr:last-child {
+            td:first-child {
+              border-bottom-left-radius: 16px;
+            }
+            
+            td:last-child {
+              border-bottom-right-radius: 16px;
             }
           }
         }
@@ -107,45 +165,65 @@
     .pagination {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 0.5rem;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
   
       button {
-        background: none;
+        background: white;
         border: none;
-        color: #6b7280;
+        color: #4b5563;
         font-size: 1rem;
         cursor: pointer;
-        transition: color 0.2s;
-  
+        transition: all 0.2s ease;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
         &:hover {
-          color: #10b981;
+          color: #0ea300;
+          background-color: rgba(14, 163, 0, 0.1);
+        }
+
+        &.active {
+          background: linear-gradient(45deg, #0ea300, #7ed321);
+          color: white;
+          box-shadow: 0 4px 12px rgba(14, 163, 0, 0.15);
         }
       }
   
       span {
         color: #9ca3af;
+        margin: 0 0.5rem;
       }
     }
   }
-// BoardList.module.scss에 기존 코드는 그대로 두고 아래 내용을 추가
 
 @media screen and (max-width: 768px) {
   .board-wrapper {
-    padding: 1rem;
+    padding: 1.5rem;
 
     .board-header {
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
+      gap: 1.5rem;
 
       h2 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+      }
+
+      .write-btn {
+        width: 100%;
+        text-align: center;
       }
     }
 
     .search-box {
       width: 100%;
+      margin-bottom: 1.5rem;
 
       input {
         width: 100%;
@@ -153,41 +231,41 @@
     }
 
     .board-table {
+      border-radius: 12px;
+      
       table {
         thead {
-          display: none; // 모바일에서는 헤더 숨김
+          display: none;
         }
 
         tbody {
           tr {
             display: block;
-            padding: 1rem 0.5rem;
-            position: relative;
-
-            &:not(:last-child) {
-              border-bottom: 1px solid #e5e7eb;
-            }
+            padding: 1.25rem;
+            border-bottom: 1px solid #f0f0f0;
 
             td {
               display: block;
-              padding: 0.25rem 0;
-              text-align: left;
+              padding: 0.5rem 0;
+              position: relative;
 
               &:before {
                 content: attr(data-label);
                 font-weight: 600;
-                margin-right: 0.5rem;
-                color: #6b7280;
+                color: #4b5563;
+                margin-bottom: 0.25rem;
+                display: block;
+                font-size: 0.85rem;
               }
 
               &.tag {
-                font-size: 0.875rem;
-                margin-bottom: 0.25rem;
+                display: inline-block;
+                margin-bottom: 0.75rem;
               }
 
               &.title {
                 font-size: 1.1rem;
-                margin-bottom: 0.5rem;
+                margin: 0.5rem 0;
               }
             }
           }
@@ -196,11 +274,12 @@
     }
 
     .pagination {
-      gap: 0.25rem;
+      gap: 0.35rem;
 
       button {
-        padding: 0.5rem;
-        font-size: 0.875rem;
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
       }
     }
   }
@@ -208,21 +287,21 @@
 
 @media screen and (max-width: 480px) {
   .board-wrapper {
-    padding: 0.75rem;
+    padding: 1rem;
 
     .board-header {
       h2 {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
       }
     }
 
     .board-table {
       tbody {
         tr {
-          padding: 0.75rem 0.5rem;
+          padding: 1rem;
 
           td {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
 
             &.title {
               font-size: 1rem;

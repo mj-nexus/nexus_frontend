@@ -1,67 +1,291 @@
 // src/components/board/BoardList/BoardList.module.scss
 .boardWrapper {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2.5rem;
+  background-color: #f8faf8;
+  border-radius: 1.5rem;
+  font-family: 'Pretendard', sans-serif;
+  color: #1a1a1a;
 
   .boardHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 
     h2 {
-      font-size: 24px;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #0ea300, #7ed321);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
       margin: 0;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, #0ea300, #7ed321);
+        border-radius: 2px;
+      }
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(45deg, #0ea300, #7ed321);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(14, 163, 0, 0.15);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(14, 163, 0, 0.25);
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+
+  .searchBox {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+
+    input {
+      padding: 0.875rem 1.25rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      width: 300px;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background-color: white;
+
+      &:focus {
+        outline: none;
+        border-color: #0ea300;
+        box-shadow: 0 0 0 4px rgba(14, 163, 0, 0.1);
+      }
+
+      &::placeholder {
+        color: #9ca3af;
+      }
     }
   }
 
   .boardTable {
-    margin: 20px 0;
-
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(14, 163, 0, 0.08);
+    overflow: hidden;
+    
     table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       background-color: white;
 
-      th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #EFEFEF;
+      thead {
+        background: linear-gradient(90deg, rgba(14, 163, 0, 0.03), rgba(126, 211, 33, 0.03));
+        font-size: 0.9rem;
+        color: #4b5563;
+
+        th {
+          padding: 1rem 1.5rem;
+          text-align: left;
+          font-weight: 600;
+          border-bottom: 2px solid #f0f0f0;
+
+          &:first-child {
+            border-top-left-radius: 16px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 16px;
+          }
+        }
       }
 
-      th {
-        background-color: #f8f8f8;
-        font-weight: bold;
-      }
+      tbody {
+        tr {
+          transition: all 0.2s ease;
 
-      tr:hover {
-        background-color: #f8f8f8;
-      }
+          &:hover {
+            background-color: rgba(14, 163, 0, 0.03);
+            
+            td {
+              color: #0ea300;
+            }
+          }
 
-      .tag {
-        color: red;
-        font-size: 14px;
-      }
+          td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+          }
 
-      .title {
-        font-weight: 500;
-        cursor: pointer;
+          &:last-child td {
+            &:first-child {
+              border-bottom-left-radius: 16px;
+            }
+            
+            &:last-child {
+              border-bottom-right-radius: 16px;
+            }
+          }
+        }
 
-        &:hover {
-          text-decoration: underline;
+        .tag {
+          font-weight: 600;
+          color: #0ea300;
+          background: rgba(14, 163, 0, 0.1);
+          padding: 0.35rem 0.75rem;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          display: inline-block;
+          margin-top: 10px;
+          margin-left: 17px;
+          margin-bottom: 10px;
+          margin-right: 17px;
+        }
+
+        .title {
+          color: #1f2937;
+          font-weight: 500;
+          cursor: pointer;
+
+          &:hover {
+            color: #0ea300;
+          }
         }
       }
     }
   }
 
   .loading, .error {
-    text-align: center;
-    padding: 20px;
-    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.1rem;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(14, 163, 0, 0.08);
   }
 
   .error {
-    color: #ff4444;
+    color: #dc2626;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .boardWrapper {
+    padding: 1.5rem;
+
+    .boardHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+
+      h2 {
+        font-size: 1.75rem;
+      }
+
+      button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .searchBox {
+      width: 100%;
+      margin-bottom: 1.5rem;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .boardTable {
+      border-radius: 12px;
+      
+      table {
+        thead {
+          display: none;
+        }
+
+        tbody {
+          tr {
+            display: block;
+            padding: 1.25rem;
+            border-bottom: 1px solid #f0f0f0;
+
+            td {
+              display: block;
+              padding: 0.5rem 0;
+              position: relative;
+
+              &:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #4b5563;
+                margin-bottom: 0.25rem;
+                display: block;
+                font-size: 0.85rem;
+              }
+
+              &.tag {
+                display: inline-block;
+                margin-bottom: 0.75rem;
+              }
+
+              &.title {
+                font-size: 1.1rem;
+                margin: 0.5rem 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .boardWrapper {
+    padding: 1rem;
+
+    .boardHeader {
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .boardTable {
+      tbody {
+        tr {
+          padding: 1rem;
+
+          td {
+            font-size: 0.9rem;
+
+            &.title {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
   }
 }

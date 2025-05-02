@@ -13,17 +13,20 @@ header {
       align-items: center;
       align-self: stretch;
       display: flex;
+      cursor: pointer;
     }
 
     .nexuslogo {
       height: 39px;
       object-fit: cover;
       width: 126px;
+      cursor: pointer;
     }
 
     .profile_group {
       display: flex;
       gap: 80px;
+      cursor: pointer;
     }
     .group {
       display: flex;

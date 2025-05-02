@@ -1,5 +1,6 @@
 // src/components/board/BoardList/BoardList.js
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { GrayButton } from '../../common/Button/GrayButton';
 import { BoardSearch } from '../BoardSearch/BoardSearch';
 import { Pagination } from '../../common/Pagination/Pagination';
@@ -14,12 +15,12 @@ export const BoardList = ({
                               showWriteButton = true,
                               showSearch = true,
                           }) => {
+    const navigate = useNavigate();
     const [boardData, setBoardData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
     const fetchBoards = async (page) => {
         if (!fetchDataFn) {
             setError('데이터를 불러오는 함수가 제공되지 않았습니다.');
@@ -97,7 +98,7 @@ export const BoardList = ({
                         </tr>
                     ) : (
                         boardData.map((post, index) => (
-                            <tr key={post.id || `post-${index}`}>
+                            <tr key={post.id || `post-${index}`} onClick={() => navigate(`/board/${post.board_id}`)}>
                                 <td className={styles.tag} data-label="말머리">{post.tag}</td>
                                 <td className={styles.title} data-label="제목">{post.title}</td>
                                 <td data-label="작성자">{post.writer}</td>

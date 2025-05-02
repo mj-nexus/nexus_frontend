@@ -1,0 +1,123 @@
+.boardDetailContainer {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .header {
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+
+    .title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #666;
+      font-size: 0.9rem;
+
+      .authorInfo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .author {
+          font-weight: 500;
+        }
+
+        .date {
+          color: #888;
+        }
+      }
+
+      .stats {
+        display: flex;
+        gap: 1rem;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          i {
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    line-height: 1.8;
+    color: #444;
+    font-size: 1.1rem;
+    min-height: 200px;
+    white-space: pre-wrap;
+  }
+
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+
+      button {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.editBtn {
+          background-color: #f8f9fa;
+          border: 1px solid #dee2e6;
+          color: #495057;
+
+          &:hover {
+            background-color: #e9ecef;
+          }
+        }
+
+        &.deleteBtn {
+          background-color: #fff;
+          border: 1px solid #dc3545;
+          color: #dc3545;
+
+          &:hover {
+            background-color: #dc3545;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+.loadingContainer, .errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 1.1rem;
+  color: #666;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 1200px;
+} 

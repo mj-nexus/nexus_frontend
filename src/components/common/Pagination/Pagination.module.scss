@@ -1,0 +1,87 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 0.5rem;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: #4b5563;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(14, 163, 0, 0.08);
+
+    &:hover {
+      background: linear-gradient(45deg, rgba(14, 163, 0, 0.08), rgba(126, 211, 33, 0.08));
+      color: #0ea300;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &.active {
+      background: linear-gradient(45deg, #0ea300, #7ed321);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(14, 163, 0, 0.15);
+
+      &:hover {
+        transform: none;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    // 화살표 아이콘용 스타일
+    &.arrow {
+      font-size: 1.2rem;
+      color: #0ea300;
+      
+      &:hover {
+        background: linear-gradient(45deg, rgba(14, 163, 0, 0.08), rgba(126, 211, 33, 0.08));
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pagination {
+    margin-top: 1.5rem;
+    
+    button {
+      min-width: 36px;
+      height: 36px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .pagination {
+    margin-top: 1rem;
+    gap: 0.25rem;
+    
+    button {
+      min-width: 32px;
+      height: 32px;
+      font-size: 0.85rem;
+    }
+  }
+}

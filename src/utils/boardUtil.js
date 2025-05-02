@@ -1,31 +1,6 @@
-import axios from "axios";
-
-export const getBoards = async () => {
-    try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/board`);
-        return response.data;
-    }
-    catch (err) {
-        throw err;
-    }
+const writerCheck = (id) => {
+    const userId = localStorage.getItem('userId');
+    return String(id) === userId;
 }
 
-export const getBoard = async (boardId) => {
-    try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/board/${boardId}`);
-        return response.data;
-    }
-    catch (err) {
-        throw err;
-    }
-}
-
-export const createBoard = async (board) => {
-    try {
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/board/`, board);
-        return response.data;
-    }
-    catch (err) {
-        throw err;
-    }
-}
+export default writerCheck;

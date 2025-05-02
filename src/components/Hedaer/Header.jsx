@@ -4,10 +4,12 @@ import nexuslogo1 from "../../assets/NexusLogo1.png";
 import "./style.scss";
 import { useAuth } from "../../context/AuthContext";
 import {getUserInfo} from "../../utils/getUserInfoUtil";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const { userId } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -29,10 +31,10 @@ export const Header = () => {
 
   return (
     <header>
-      <div className="logo">
+      <div className="logo" onClick={() => navigate('/')}>
         <img className="nexuslogo" src={nexuslogo1} alt="logo" />
       </div>
-      <div className="profile_group">
+      <div className="profile_group" onClick={() => navigate('/profile')}>
         <div className="group">
           <img
             src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${userInfo.profile_image}`}

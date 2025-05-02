@@ -20,6 +20,15 @@ export const boardService = {
         }
     },
 
+    getBoardDetail: async (boardId) => {
+        try {
+            const response = await api.get(`/board/${boardId}`);
+            return response.data;
+        } catch (error) {
+            throw new Error('게시글을 불러오는데 실패했습니다.');
+        }
+    },
+
     searchBoards: async (searchTerm, page = 1, limit = 10) => {
         try {
             const response = await api.get(
@@ -28,6 +37,15 @@ export const boardService = {
             return response.data;
         } catch (error) {
             throw new Error('게시글 검색에 실패했습니다.');
+        }
+    },
+
+    deleteBoard: async (boardId) => {
+        try {
+            const response = await api.delete(`/board/${boardId}`);
+            return response.data;
+        } catch (error) {
+            throw new Error('게시글 삭제에 실패했습니다.');
         }
     }
 };
