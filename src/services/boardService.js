@@ -47,5 +47,14 @@ export const boardService = {
         } catch (error) {
             throw new Error('게시글 삭제에 실패했습니다.');
         }
+    },
+    writeBoard: async (boardData) => {
+        try {
+            console.log(boardData);
+            const response = await api.post('/board', boardData);
+            return response.data;
+        } catch (error) {
+            throw new Error('게시글 작성에 실패했습니다.'); 
+        }
     }
 };

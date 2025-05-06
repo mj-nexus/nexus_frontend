@@ -17,9 +17,10 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false); // 로딩 끝
   }, []);
 
-  const login = (token, id) => {
+  const login = (token, id, name) => {
     localStorage.setItem('accessToken', token);
     localStorage.setItem('userId', id);
+    localStorage.setItem('name', name);
     setIsAuthenticated(true);
     setUserId(id);
   };

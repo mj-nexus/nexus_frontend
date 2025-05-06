@@ -1,11 +1,10 @@
 .sidebar {
-    width: 200px; // 사이드바의 너비
+    width: 200px;
     position: fixed;
     border-right: 1px solid #E6EFF5;
     height: 100vh;
-    padding-top: 80px;
+    margin-top: 80px;
     
-
     .menu-item {
         display: flex;
         align-items: center;
@@ -13,31 +12,31 @@
         padding-left: 30px;
         cursor: pointer;
         position: relative;
-        color: #b1b1b1; // 기본 글자색 설정
+        color: #b1b1b1;
         gap: 10px;
         .indicator {
-            width: 5px; // 막대의 너비
-            height: 100%; // 막대의 높이
-            background-color: #03a300; // 막대의 색상
+            width: 5px;
+            height: 100%;
+            background-color: #03a300;
             position: absolute;
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            opacity: 0; // 기본적으로 숨김
+            opacity: 0;
             transition: opacity 0.3s;
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
         }
 
         &.active {
-            font-weight: bold; // 활성 메뉴 강조
-            color: #03a300; // 활성 메뉴 색상
+            font-weight: bold;
+            color: #03a300;
         }
 
         .icon {
-            width: 20px; // 아이콘의 너비
-            height: 20px; // 아이콘의 높이
-            margin-right: 10px; // 아이콘과 텍스트 사이의 간격
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
         }
     }
 }

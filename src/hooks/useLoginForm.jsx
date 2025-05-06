@@ -12,8 +12,8 @@ export function useLoginForm() {
 
   const handleLogin = async () => {
     try {
-      const { userid, accessToken } = await loginRequest(student_id, password);
-      login( accessToken, userid );
+      const { userid, accessToken, name } = await loginRequest(student_id, password);
+      login( accessToken, userid, name );
       navigate('/')
     } catch (error) {
       console.error("로그인 실패", error);

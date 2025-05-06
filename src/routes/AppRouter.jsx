@@ -20,6 +20,9 @@ import { BoardDetail } from "../pages/BoardPage/BoardDetail";
 import { BoardEdit } from "../pages/BoardPage/BoardEdit";
 import { BoardLayout } from "../layouts/Board/BoardLayout";
 
+// 메시지 관련 컴포넌트
+import { Message } from "../pages/Message/Message";
+
 export const AppRouter = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -54,6 +57,8 @@ export const AppRouter = () => {
               <Route path=":id" element={<BoardDetail />} /> {/* 게시글 상세 */}
               <Route path=":id/edit" element={<BoardEdit />} /> {/* 게시글 수정 */}
             </Route>
+            {/* 메시지 관련 라우트 */}
+            <Route path="message" element={<Message />} />
 
             {/* 프로필 관련 라우트 */}
             <Route path="profile">
@@ -61,6 +66,7 @@ export const AppRouter = () => {
               <Route path="posts" element={<StudentBoard showWriteButton={false} />} /> {/* 내가 쓴 글 목록 */}
             </Route>
           </Route>
+
 
           {/* 잘못된 경로 접근 시 */}
           <Route
