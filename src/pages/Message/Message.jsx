@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import './Message.css';
+import styles from './Message.module.scss';
 
 // 더미 채팅방 데이터
 const chatRooms = [
-  { id: 1, name: '홍길동', lastMessage: '안녕하세요!', time: '오후 2:30', avatar: 'https://via.placeholder.com/40' },
-  { id: 2, name: '김철수', lastMessage: '오늘 뭐해요?', time: '오전 11:15', avatar: 'https://via.placeholder.com/40' },
-  { id: 3, name: '이영희', lastMessage: '프로젝트 진행상황 어떻게 되나요?', time: '어제', avatar: 'https://via.placeholder.com/40' },
-  { id: 4, name: '박지성', lastMessage: '내일 회의 시간 언제인가요?', time: '3일 전', avatar: 'https://via.placeholder.com/40' },
-  { id: 5, name: '최민지', lastMessage: '파일 받았습니다. 감사합니다!', time: '1주일 전', avatar: 'https://via.placeholder.com/40' },
+  { id: 1, name: '홍길동', lastMessage: '안녕하세요!', time: '오후 2:30', avatar: 'https://via.placeholder.com/40', isOnline: true },
+  { id: 2, name: '김철수', lastMessage: '오늘 뭐해요?', time: '오전 11:15', avatar: 'https://via.placeholder.com/40', isOnline: false },
+  { id: 3, name: '이영희', lastMessage: '프로젝트 진행상황 어떻게 되나요?', time: '어제', avatar: 'https://via.placeholder.com/40', isOnline: true },
+  { id: 4, name: '박지성', lastMessage: '내일 회의 시간 언제인가요?', time: '3일 전', avatar: 'https://via.placeholder.com/40', isOnline: false },
+  { id: 5, name: '최민지', lastMessage: '파일 받았습니다. 감사합니다!', time: '1주일 전', avatar: 'https://via.placeholder.com/40', isOnline: true },
 ];
 
 // 더미 메시지 데이터
@@ -53,73 +53,130 @@ export const Message = () => {
   };
 
   return (
-    <div className="message-container">
-      {/* 채팅방 리스트 (왼쪽) */}
-      <div className="chat-list">
-        <div className="chat-list-header">
-          <h2>메시지</h2>
-        </div>
-        <div className="chat-rooms">
-          {chatRooms.map((room) => (
-            <div 
-              key={room.id} 
-              className={`chat-room ${selectedRoom === room.id ? 'active' : ''}`}
-              onClick={() => handleRoomSelect(room.id)}
-            >
-              <div className="chat-room-avatar">
-                <img src={room.avatar} alt={`${room.name}의 프로필`} />
-              </div>
-              <div className="chat-room-info">
-                <div className="chat-room-name">{room.name}</div>
-                <div className="chat-room-last-message">{room.lastMessage}</div>
-              </div>
-              <div className="chat-room-time">{room.time}</div>
+    <div className={styles['message-page']}>
+
+      {/* 메시지 영역 */}
+      <div className={styles['message-wrapper']}>
+        <div className={styles['message-container']}>
+          {/* 채팅방 리스트 (왼쪽) */}
+          <div className={styles['chat-list']}>
+            <div className={styles['chat-list__header']}>
+              <h2>메시지</h2>
+              <button className={styles['new-message-button']}>
+                <span className={styles['new-message-icon']} role="img" aria-label="새 메시지">✏️</span>
+              </button>
             </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* 채팅방 내용 (오른쪽) */}
-      <div className="chat-content">
-        {selectedRoom ? (
-          <>
-            <div className="chat-header">
-              <div className="chat-header-avatar">
-                <img 
-                  src={chatRooms.find(room => room.id === selectedRoom).avatar} 
-                  alt="프로필 사진" 
-                />
-              </div>
-              <div className="chat-header-name">
-                {chatRooms.find(room => room.id === selectedRoom).name}
-              </div>
-            </div>
-            <div className="chat-messages">
-              {messages[selectedRoom].map((message) => (
-                <div 
-                  key={message.id} 
-                  className={`message ${message.isMe ? 'my-message' : 'other-message'}`}
+            <div className={styles['chat-list__rooms']}>
+              {chatRooms.map((room) => (
+                <div
+                  key={room.id}
+                  className={`${styles['chat-list__room']} ${selectedRoom === room.id ? styles['chat-list__room--active'] : ''}`}
+                  onClick={() => handleRoomSelect(room.id)}
                 >
-                  <div className="message-content">{message.text}</div>
-                  <div className="message-time">{message.time}</div>
+                  <div className={styles['chat-list__room-avatar']}>
+                    <img src={room.avatar} alt={`${room.name}의 프로필`} />
+                    {room.isOnline && <span className={styles['online-indicator']}></span>}
+                  </div>
+                  <div className={styles['chat-list__room-info']}>
+                    <div className={styles['chat-room-name']}>{room.name}</div>
+                    <div className={styles['chat-room-last-message']}>{room.lastMessage}</div>
+                  </div>
+                  <div className={styles['chat-list__room-time']}>{room.time}</div>
                 </div>
               ))}
             </div>
-            <form className="chat-input" onSubmit={handleMessageSend}>
-              <input
-                type="text"
-                placeholder="메시지를 입력하세요..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-              />
-              <button type="submit">전송</button>
-            </form>
-          </>
-        ) : (
-          <div className="no-chat-selected">
-            <p>채팅방을 선택하세요</p>
           </div>
-        )}
+          
+          {/* 채팅방 내용 (오른쪽) */}
+          <div className={styles['chat-content']}>
+            {selectedRoom ? (
+              <>
+                <div className={styles['chat-header']}>
+                  <div className={styles['chat-header-user']}>
+                    <div className={styles['chat-header-avatar']}>
+                      <img
+                        src={chatRooms.find(room => room.id === selectedRoom).avatar}
+                        alt="프로필 사진"
+                      />
+                      {chatRooms.find(room => room.id === selectedRoom).isOnline && (
+                        <span className={`${styles['online-indicator']} ${styles['online-indicator--small']}`}></span>
+                      )}
+                    </div>
+                    <div className={styles['chat-header-info']}>
+                      <div className={styles['chat-header-name']}>
+                        {chatRooms.find(room => room.id === selectedRoom).name}
+                      </div>
+                      <div className={styles['chat-header-status']}>
+                        {chatRooms.find(room => room.id === selectedRoom).isOnline ? '활동 중' : '오프라인'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles['chat-header-actions']}>
+                    <button className={styles['chat-action-button']}>
+                      <span className={styles['action-icon']} role="img" aria-label="전화">📞</span>
+                    </button>
+                    <button className={styles['chat-action-button']}>
+                      <span className={styles['action-icon']} role="img" aria-label="영상">📹</span>
+                    </button>
+                    <button className={styles['chat-action-button']}>
+                      <span className={styles['action-icon']} role="img" aria-label="정보">ℹ️</span>
+                    </button>
+                  </div>
+                </div>
+                <div className={styles['chat-messages']}>
+                  {messages[selectedRoom].map((message) => (
+                    <div
+                      key={message.id}
+                      className={`${styles['message']} ${message.isMe ? styles['message--my'] : styles['message--other']}`}
+                    >
+                      {!message.isMe && (
+                        <div className={styles['message-avatar']}>
+                          <img
+                            src={chatRooms.find(room => room.id === selectedRoom).avatar}
+                            alt="프로필 사진"
+                          />
+                        </div>
+                      )}
+                      <div className={styles['message-bubble']}>
+                        <div className={styles['message-content']}>{message.text}</div>
+                        <div className={styles['message-time']}>{message.time}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles['chat-footer']}>
+                  <div className={styles['chat-tools']}>
+                    <button className={styles['tool-button']}>
+                      <span className={styles['tool-icon']} role="img" aria-label="이모지">😊</span>
+                    </button>
+                    <button className={styles['tool-button']}>
+                      <span className={styles['tool-icon']} role="img" aria-label="이미지">🖼️</span>
+                    </button>
+                    <button className={styles['tool-button']}>
+                      <span className={styles['tool-icon']} role="img" aria-label="하트">❤️</span>
+                    </button>
+                  </div>
+                  <form className={styles['chat-input']} onSubmit={handleMessageSend}>
+                    <input
+                      type="text"
+                      placeholder="메시지를 입력하세요..."
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                    />
+                    <button type="submit" className={styles['send-button']}>전송</button>
+                  </form>
+                </div>
+              </>
+            ) : (
+              <div className={styles['no-chat-selected']}>
+                <div className={styles['no-chat-icon']}>💬</div>
+                <h3>메시지를 보내보세요</h3>
+                <p>친구에게 메시지를 보내거나 그룹 채팅방을 만들 수 있습니다.</p>
+                <button className={styles['new-message-button-large']}>새 메시지 보내기</button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
