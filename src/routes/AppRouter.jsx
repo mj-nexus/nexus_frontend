@@ -21,7 +21,7 @@ import { BoardEdit } from "../pages/BoardPage/BoardEdit";
 import { BoardLayout } from "../layouts/Board/BoardLayout";
 
 // 메시지 관련 컴포넌트
-import { Message } from "../pages/Message/Message";
+import Message from '../pages/Message/Message'
 
 export const AppRouter = () => {
   const { isAuthenticated, isLoading } = useAuth();
