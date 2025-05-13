@@ -24,6 +24,10 @@ export function useLoginForm() {
     navigate("/signup");
   };
 
+  const goToRestPW = () => {
+    navigate("/resetpw");
+  }
+
   return {
     student_id,
     password,
@@ -31,5 +35,6 @@ export function useLoginForm() {
     setPassword,
     handleLogin,
     goToSignUp,
+    goToRestPW
   };
 }

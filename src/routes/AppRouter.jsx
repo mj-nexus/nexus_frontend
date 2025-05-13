@@ -9,6 +9,7 @@ import { Login } from "../pages/loginPage/Login";
 import { Home } from "../pages/Home/Home";
 import { useAuth } from "../context/AuthContext";
 import { SignUpStep1, SignUpStep2, SignUpStep3, SignUpStep4 } from "../pages/signupPage";
+import { ResetPass } from "../pages/ResetPasswdPage/enterEmail"
 
 import MainLayout from "../layouts/MainLayout";
 import { Profile } from "../pages/profile/Profile";
@@ -21,7 +22,7 @@ import { BoardEdit } from "../pages/BoardPage/BoardEdit";
 import { BoardLayout } from "../layouts/Board/BoardLayout";
 
 // 메시지 관련 컴포넌트
-import Message from '../pages/Message/Message'
+import { Message } from '../pages/Message/Message'
 
 export const AppRouter = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -40,6 +41,7 @@ export const AppRouter = () => {
           <Route path="/signup/step2" element={<SignUpStep2 />} />
           <Route path="/signup/step3" element={<SignUpStep3 />} />
           <Route path="/signup/step4" element={<SignUpStep4 />} />
+          <Route path="/resetpw" element={<ResetPass />} />
 
           {/* MainLayout으로 감싸진 인증된 사용자 전용 라우트 */}
           <Route

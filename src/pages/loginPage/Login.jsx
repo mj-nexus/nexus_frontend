@@ -26,6 +26,7 @@ export const Login = () => {
     setPassword,
     handleLogin,
     goToSignUp,
+    goToRestPW
   } = useLoginForm();
 
   return (
@@ -45,7 +46,7 @@ export const Login = () => {
               <Toggle />
               <p>로그인 유지하기</p>
             </div>
-            <p className="link">비밀번호 찾기</p>
+            <p className="link" onClick={goToRestPW}>비밀번호 찾기</p>
           </div>
           <BigButton onClick={handleLogin} label="로그인" width="360px" height="40px" fontSize="15px" />
           <div className="line"></div>
