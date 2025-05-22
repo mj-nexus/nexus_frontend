@@ -1,8 +1,35 @@
 // src/components/board/BoardSearch/BoardSearch.module.scss
 .searchForm {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
   margin: 20px 0;
+
+  .searchTypeContainer {
+    display: flex;
+    align-items: center;
+    
+    .searchTypeSelect {
+      padding: 8px 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #f8f9fa;
+      cursor: pointer;
+      min-width: 100px;
+
+      &:focus {
+        outline: none;
+        border-color: #0ea300;
+      }
+    }
+  }
+
+  .searchInputContainer {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
 
   .searchInput {
     flex: 1;
@@ -32,6 +59,22 @@
 
     &:active {
       background-color: #dee2e6;
+    }
+  }
+}
+
+// 반응형 디자인
+@media (min-width: 768px) {
+  .searchForm {
+    flex-direction: row;
+    align-items: center;
+
+    .searchTypeContainer {
+      margin-right: 10px;
+    }
+    
+    .searchInputContainer {
+      flex: 1;
     }
   }
 }

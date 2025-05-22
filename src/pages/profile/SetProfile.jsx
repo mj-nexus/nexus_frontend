@@ -14,12 +14,12 @@ export const SetProfile = (props) => {
     const [isUploading, setIsUploading] = useState(false);
     // 사용자 입력 정보 상태 관리 (안전하게 접근)
     const [formData, setFormData] = useState({
-        name: userInfo?.name || '',
-        email: userInfo?.email || '',
-        phone: userInfo?.phone || '',
-        company: userInfo?.company || '',
+        nick_name: userInfo?.Profile?.nick_name || '',
+        email: userInfo?.Profile?.email || '',
+        phone: userInfo?.Profile?.phone || '',
+        company: userInfo?.Profile?.company || '',
         bio: userInfo?.Profile?.bio || '',
-        skill: userInfo?.skill || ''
+        skill: userInfo?.Profile?.skill || []
     });
     // 원래 데이터와 비교해 변경 여부 확인
     const [isChanged, setIsChanged] = useState(false);
@@ -47,12 +47,13 @@ export const SetProfile = (props) => {
 
     // 정보 필드 구성
     const infoFields = [
-        { id: 'name', label: "Name", value: formData.name, originalValue: userInfo?.name || '' },
-        { id: 'email', label: "Email account", value: formData.email, originalValue: userInfo?.email || '' },
-        { id: 'phone', label: "Mobile number", value: formData.phone, originalValue: userInfo?.phone || '' },
-        { id: 'company', label: "company", value: formData.company, originalValue: userInfo?.company || '' },
-        { id: 'bio', label: "Self-introduction", value: formData.bio, originalValue: userInfo?.Profile?.bio || '' },
-        { id: 'skill', label: "hashtag", value: formData.skill, originalValue: userInfo?.skill || '' },
+        { id: 'nick_name', label: "닉네임", value: formData.nick_name, originalValue: userInfo?.Profile?.nick_name || '' },
+        { id: 'email', label: "이메일", value: formData.email, originalValue: userInfo?.Profile?.email || '' },
+        { id: 'phone', label: "전화번호", value: formData.phone, originalValue: userInfo?.Profile?.phone || '' },
+        { id: 'company', label: "회사", value: formData.company, originalValue: userInfo?.Profile?.company || '' },
+        { id: 'bio', label: "자기소개", value: formData.bio, originalValue: userInfo?.Profile?.bio || '' },
+        { id: 'skill', label: "기술 태그", value: Array.isArray(formData.skill) ? formData.skill.map(s => s.name).join(', ') : '', 
+          originalValue: Array.isArray(userInfo?.Profile?.skill) ? userInfo.Profile.skill.map(s => s.name).join(', ') : '' },
     ];
     
     const handleImageClick = () => {
@@ -98,12 +99,12 @@ export const SetProfile = (props) => {
     // 변경 여부 검사
     const checkIfChanged = (currentData) => {
         const isDataChanged = 
-            currentData.name !== (userInfo?.name || '') ||
-            currentData.email !== (userInfo?.email || '') ||
-            currentData.phone !== (userInfo?.phone || '') ||
-            currentData.company !== (userInfo?.company || '') ||
+            currentData.nick_name !== (userInfo?.Profile?.nick_name || '') ||
+            currentData.email !== (userInfo?.Profile?.email || '') ||
+            currentData.phone !== (userInfo?.Profile?.phone || '') ||
+            currentData.company !== (userInfo?.Profile?.company || '') ||
             currentData.bio !== (userInfo?.Profile?.bio || '') ||
-            currentData.skill !== (userInfo?.skill || '');
+            (typeof currentData.skill === 'string' && currentData.skill !== (Array.isArray(userInfo?.Profile?.skill) ? userInfo.Profile.skill.map(s => s.name).join(', ') : ''));
         
         setIsChanged(isDataChanged || selectedFile !== null);
     };
@@ -118,10 +119,10 @@ export const SetProfile = (props) => {
         setIsUploading(true);
         
         try {
-            // 사용자 ID 확인 (student_id 또는 id 값을 사용)
-            const studentId = localStorage.getItem('userId');
+            // 사용자 ID 확인
+            const userId = localStorage.getItem('userId');
             
-            if (!studentId) {
+            if (!userId) {
                 console.error('사용자 ID가 없습니다.');
                 alert('사용자 ID를 찾을 수 없습니다.');
                 setIsUploading(false);
@@ -133,9 +134,9 @@ export const SetProfile = (props) => {
             
             if (selectedFile) {
                 const formDataFile = new FormData();
-                formDataFile.append('file', selectedFile);
+                formDataFile.append('profileImage', selectedFile);
                 try {
-                    const uploadResponse = await api.post('/upload/profile', formDataFile, {
+                    const uploadResponse = await api.post(`api/user/upload-profile-image/${userId}`, formDataFile, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -151,23 +152,34 @@ export const SetProfile = (props) => {
                 }
             }
             
-            // 프로필 정보 업데이트 데이터 준비
+            // skill 문자열을 객체 배열로 변환
+            let skillArray = [];
+            if (typeof formData.skill === 'string' && formData.skill.trim() !== '') {
+                const skillNames = formData.skill.split(',').map(s => s.trim());
+                skillArray = skillNames.map(name => ({ name, color: 'green' })); // 기본 색상은 green으로 설정
+            } else if (Array.isArray(formData.skill)) {
+                skillArray = formData.skill; // 이미 배열인 경우 그대로 사용
+            }
+            
+            // 프로필 정보 업데이트 데이터 준비 (Profile 데이터로 구성)
             const updateData = {
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                company: formData.company,
-                bio: formData.bio,
-                skill: formData.skill
+                Profile: {
+                    nick_name: formData.nick_name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    company: formData.company,
+                    bio: formData.bio,
+                    skill: skillArray
+                }
             };
             
             // 업로드한 이미지가 있으면 추가
             if (uploadedImageFileName) {
-                updateData.profile_image = uploadedImageFileName;
+                updateData.Profile.profile_image = uploadedImageFileName;
             }
             
             // 프로필 정보 업데이트 요청
-            const updateResponse = await api.patch(`/api/user/updateUser/${studentId}`, updateData);
+            const updateResponse = await api.patch(`/api/user/updateUser/${userId}`, updateData);
             
             if (updateResponse.status === 200 || updateResponse.status === 201) {
                 console.log('프로필 업데이트 성공:', updateResponse.data);
@@ -180,6 +192,11 @@ export const SetProfile = (props) => {
                 if (setHandleTogle) {
                     setHandleTogle(false);
                 }
+                
+                // 페이지 새로고침
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500); // 0.5초 후 새로고침 (알림이 표시된 후)
             } else {
                 console.warn('프로필 업데이트 응답이 예상과 다릅니다:', updateResponse);
                 alert('프로필 업데이트가 완료되었지만 응답이 예상과 다릅니다.');

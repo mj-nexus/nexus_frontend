@@ -1,7 +1,6 @@
 import React from "react";
 import { ReactComponent as HomeIcon } from "../../assets/homeIcon.svg"; // SVG 아이콘
 import { ReactComponent as MessageIcon } from "../../assets/messageIcon.svg"; // SVG 아이콘
-import { ReactComponent as SearchIcon } from "../../assets/searchIcon.svg"; // SVG 아이콘
 import { ReactComponent as NoticeIcon } from "../../assets/noticeIcon.svg"; // SVG 아이콘
 import { ReactComponent as StudyIcon } from "../../assets/studyIcon.svg"; // SVG 아이콘
 import { ReactComponent as ProfileIcon } from "../../assets/userIcon.svg"; // SVG 아이콘
@@ -32,12 +31,6 @@ export const Sidebar = () => {
       icon: <MessageIcon className="icon" />,
       label: "Message",
       path: "message",
-    },
-    {
-      id: 3,
-      icon: <SearchIcon className="icon" />,
-      label: "Search",
-      path: "search",
     },
     {
       id: 4,

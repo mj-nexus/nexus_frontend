@@ -1,0 +1,222 @@
+/* Study 페이지 스타일 */
+.studyContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pageHeader {
+  margin-bottom: 30px;
+  text-align: center;
+  
+  h1 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+}
+
+.studyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timetableSection {
+  width: 100%;
+}
+
+.timetableCard {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.cardHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  
+  h2 {
+    font-size: 1.3rem;
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+}
+
+.semesterInfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.departmentInfo, .creditInfo {
+  display: inline-block;
+}
+
+.timetableWrapper {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+/* 모달 스타일 */
+.classDetailsModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  h3 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #333;
+  }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  
+  &:hover {
+    color: #333;
+  }
+}
+
+.modalBody {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.classInfo {
+  margin-bottom: 24px;
+}
+
+.infoItem {
+  display: flex;
+  margin-bottom: 10px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.infoLabel {
+  width: 100px;
+  font-weight: 600;
+  color: #555;
+}
+
+.infoValue {
+  flex-grow: 1;
+  color: #333;
+}
+
+.professorContact {
+  margin-bottom: 24px;
+  
+  h4 {
+    font-size: 1.1rem;
+    margin: 0 0 12px 0;
+    color: #333;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  
+  .contactIcon {
+    color: #4f6df5;
+    margin-right: 10px;
+    font-size: 1.1rem;
+  }
+}
+
+.classSyllabus {
+  h4 {
+    font-size: 1.1rem;
+    margin: 0 0 12px 0;
+    color: #333;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  p {
+    color: #555;
+    line-height: 1.5;
+  }
+}
+
+.modalFooter {
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.syllabusButton, .contactButton {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.syllabusButton {
+  background-color: #f5f5f5;
+  color: #333;
+  
+  &:hover {
+    background-color: #e5e5e5;
+  }
+}
+
+.contactButton {
+  background-color: #4f6df5;
+  color: white;
+  
+  &:hover {
+    background-color: #3a56d4;
+  }
+} 

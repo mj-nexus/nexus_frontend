@@ -6,7 +6,7 @@ export const loginRequest = async (student_id, password) => {
             student_id,
             password,
         });
-        const name = response.data.user.name;
+        const name = response.data.user.Profile.user_name;
         const userid = response.data.user.user_id;
         const accessToken = response.data.accessToken;
         return { name, userid, accessToken };

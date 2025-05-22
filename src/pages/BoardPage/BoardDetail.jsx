@@ -5,12 +5,15 @@ import { boardService } from '../../services/boardService';
 import { formatDate } from '../../utils/dateFormattingUtil';
 import styles from './BoardDetail.module.scss';
 import writerCheck from '../../utils/boardUtil';
+import CommentList from '../../components/Comment/CommentList';
+
 export const BoardDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [board, setBoard] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const fetchBoardDetail = async () => {
@@ -19,6 +22,7 @@ export const BoardDetail = () => {
                 const data = await boardService.getBoardDetail(id);
                 setBoard(data);
             } catch (err) {
+                console.error('게시글 상세 로딩 오류:', err);
                 setError(err.message || '게시글을 불러오는데 실패했습니다.');
             } finally {
                 setLoading(false);
@@ -32,21 +36,31 @@ export const BoardDetail = () => {
         navigate(`/board/edit/${id}`);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (window.confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
-            boardService.deleteBoard(id)
-                .then(() => {
-                    navigate('/board');
-                })
-                .catch((err) => {
-                    alert('게시글 삭제에 실패했습니다.');
-                });
+            try {
+                setIsDeleting(true);
+                await boardService.deleteBoard(id);
+                alert('게시글이 삭제되었습니다.');
+                navigate('/board', { state: { refresh: true } });
+            } catch (err) {
+                console.error('게시글 삭제 오류:', err);
+                alert('게시글 삭제에 실패했습니다.');
+            } finally {
+                setIsDeleting(false);
+            }
         }
+    };
+
+    const handleBackToList = () => {
+        navigate('/board');
     };
 
     if (loading) return <div className={styles.loadingContainer}>로딩 중...</div>;
     if (error) return <div className={styles.errorContainer}>에러: {error}</div>;
     if (!board) return <div className={styles.errorContainer}>게시글을 찾을 수 없습니다.</div>;
+
+    const isWriter = writerCheck(board.writer_id);
 
     return (
         <div className={styles.boardDetailContainer}>
@@ -71,17 +85,22 @@ export const BoardDetail = () => {
             </div>
 
             <div className={styles.footer}>
-                {writerCheck(board.writer_id) && (
+                <button className={styles.backBtn} onClick={handleBackToList}>
+                    목록으로
+                </button>
+                
+                {isWriter && (
                     <div className={styles.actions}>
                         <button className={styles.editBtn} onClick={handleEdit}>
                             수정
-                    </button>
-                    <button className={styles.deleteBtn} onClick={handleDelete}>
-                        삭제
-                    </button>
-                </div>
+                        </button>
+                        <button className={styles.deleteBtn} onClick={handleDelete} disabled={isDeleting}>
+                            {isDeleting ? '삭제 중...' : '삭제'}
+                        </button>
+                    </div>
                 )}
             </div>
+            <CommentList boardId={id} userId={localStorage.getItem('userId')} />
         </div>
     );
 };

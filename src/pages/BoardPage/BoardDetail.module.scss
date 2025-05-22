@@ -72,6 +72,21 @@
     justify-content: space-between;
     align-items: center;
 
+    .backBtn {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      background-color: #e9ecef;
+      border: 1px solid #ced4da;
+      color: #495057;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #dee2e6;
+      }
+    }
+
     .actions {
       display: flex;
       gap: 1rem;
@@ -101,6 +116,13 @@
           &:hover {
             background-color: #dc3545;
             color: #fff;
+          }
+
+          &:disabled {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+            color: #adb5bd;
+            cursor: not-allowed;
           }
         }
       }

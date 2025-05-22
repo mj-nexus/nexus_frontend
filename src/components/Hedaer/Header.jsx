@@ -5,7 +5,7 @@ import "./style.scss";
 import { useAuth } from "../../context/AuthContext";
 import {getUserInfo} from "../../utils/getUserInfoUtil";
 import { useNavigate } from "react-router-dom";
-
+import { FaUserCircle } from "react-icons/fa";
 export const Header = () => {
   const { userId } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
@@ -25,9 +25,21 @@ export const Header = () => {
     fetchUserInfo();
   }, [userId]);
 
-  if (!userInfo) {
-    return null; // Or render a loading indicator
-  }
+  // 프로필 이미지 URL 생성 함수
+  const getProfileImageUrl = () => {
+    if (userInfo && userInfo.profile_image) {
+      return `${process.env.REACT_APP_BACKEND_HOST}/upload/${userInfo.profile_image}`;
+    }
+  };
+
+  // 사용자 이름과 닉네임 표시 함수
+  const getNickName = () => {
+    return userInfo?.nick_name || "사용자";
+  };
+
+  const getUserName = () => {
+    return userInfo?.user_name || "";
+  };
 
   return (
     <header>
@@ -36,13 +48,16 @@ export const Header = () => {
       </div>
       <div className="profile_group" onClick={() => navigate('/profile')}>
         <div className="group">
-          <img
-            src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${userInfo.profile_image}`}
+          {(userInfo && userInfo.profile_image) ? 
+          (<img
+            src={getProfileImageUrl()}
             alt="프로필 이미지"
-          />
+          />) : (
+            <FaUserCircle size={50} color="#ccc" />
+          )}
           <div className="text-wrapper">
-            <p>{userInfo.nick_name}</p>
-            <p>{userInfo.user_name}</p>
+            <p>{getNickName()}</p>
+            <p>{getUserName()}</p>
           </div>
         </div>
         <div className="noti_bg">

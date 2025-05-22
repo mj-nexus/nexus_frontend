@@ -8,12 +8,16 @@ export const BoardWrite = () => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
     const [content, setContent] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
     const writer_id = localStorage.getItem('userId');
     const writer = localStorage.getItem('name');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return;
+        
+        setIsSubmitting(true);
         const boardData = {
             writer_id,
             writer,
@@ -22,13 +26,15 @@ export const BoardWrite = () => {
             content
         };
         try {
-            boardService.writeBoard(boardData);
+            await boardService.writeBoard(boardData);
             alert('게시글 작성에 성공했습니다.');
-            navigate('/board');
+            navigate('/board', { state: { refresh: true } });
         }
         catch (error) {
             console.error('게시글 작성 오류:', error);
             alert('게시글 작성에 실패했습니다. 다시 시도해주세요.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -71,7 +77,16 @@ export const BoardWrite = () => {
                     />
                 </div>
                 <div className={styles.buttonGroup}>
-                    <button type="submit" className={styles.submitBtn}>등록</button>
+                    <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                        {isSubmitting ? '저장 중...' : '등록'}
+                    </button>
+                    <button 
+                        type="button" 
+                        className={styles.cancelBtn} 
+                        onClick={() => navigate('/board')}
+                    >
+                        취소
+                    </button>
                 </div>
             </form>
         </div>

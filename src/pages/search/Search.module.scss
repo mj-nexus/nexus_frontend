@@ -1,0 +1,89 @@
+.searchPage {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.searchForm {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.searchInput {
+  flex: 1;
+  font-size: 1.3rem;
+  padding: 16px 18px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  outline: none;
+  transition: border 0.2s;
+}
+.searchInput:focus {
+  border-color: #4f8cff;
+}
+
+.searchButton {
+  padding: 0 28px;
+  font-size: 1.1rem;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.searchButton:hover {
+  background: #2563eb;
+}
+
+.resultSection {
+  margin-top: 16px;
+}
+
+.userList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #f7f9fa;
+  border-radius: 12px;
+  padding: 18px 22px;
+  min-width: 260px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  flex: 1 1 320px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nickName {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2563eb;
+}
+.name {
+  font-size: 1rem;
+  color: #222;
+}
+.email {
+  font-size: 0.95rem;
+  color: #888;
+}
+
+.error {
+  color: #e74c3c;
+  margin: 12px 0;
+  font-weight: 500;
+} 

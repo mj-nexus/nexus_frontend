@@ -2,7 +2,7 @@
 import { BoardList } from '../../components/Board/BoardList';
 import { boardService } from '../../services/boardService';
 
-export const MyPosts = () => {
+export const MyBoard = () => {
     const userId = localStorage.getItem('userId');
     const fetchMyPosts = () => boardService.getMyBoard(userId);
 

@@ -26,4 +26,14 @@ export const messageService = {
       throw new Error("채팅방 채팅 내용을 불러오는데 실패했습니다.");
     }
   },
+  // 채팅방 삭제
+  deleteChatRoom: async (roomId) => {
+    try {
+      const response = await api.delete(`/api/messages/chat-room/${roomId}`);
+      return response.data;
+    } catch (error) {
+      console.error('채팅방 삭제 실패:', error);
+      throw error;
+    }
+  },
 }
