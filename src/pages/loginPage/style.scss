@@ -173,3 +173,18 @@ $bg_green: #F5FAF6;
     
   }
   
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin: 10px 0;
+  padding: 8px 12px;
+  background-color: rgba(231, 76, 60, 0.1);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.error-input {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 1px rgba(231, 76, 60, 0.3) !important;
+}
+  

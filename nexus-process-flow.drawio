@@ -1,0 +1,225 @@
+<mxfile host="app.diagrams.net" modified="2023-06-10T12:00:00.000Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36" etag="abcdefgh" version="14.7.7" type="device">
+  <diagram id="nexus-flow-diagram" name="Nexus 시스템 흐름도">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- 타이틀 -->
+        <mxCell id="title" value="Nexus 프로젝트 프로세스 설계서" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="120" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 사용자 -->
+        <mxCell id="user" value="사용자" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="30" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 프론트엔드 -->
+        <mxCell id="frontend" value="Frontend&lt;br&gt;(React)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="240" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 백엔드 -->
+        <mxCell id="backend" value="Backend&lt;br&gt;(API 서버)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="520" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 데이터베이스 -->
+        <mxCell id="database" value="Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="680" y="130" width="60" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- 사용자 → 프론트엔드 -->
+        <mxCell id="user-frontend" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="user" target="frontend">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="420" as="sourcePoint" />
+            <mxPoint x="440" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 프론트엔드 → 백엔드 -->
+        <mxCell id="frontend-backend" value="API 요청" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="frontend" target="backend">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="420" as="sourcePoint" />
+            <mxPoint x="440" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 백엔드 → 프론트엔드 -->
+        <mxCell id="backend-frontend" value="API 응답" style="endArrow=classic;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="backend" target="frontend">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="420" as="sourcePoint" />
+            <mxPoint x="440" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 백엔드 → 데이터베이스 -->
+        <mxCell id="backend-database" value="" style="endArrow=classic;startArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="backend" target="database">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="420" as="sourcePoint" />
+            <mxPoint x="440" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 인증 프로세스 섹션 -->
+        <mxCell id="auth_section" value="사용자 인증 프로세스" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="120" y="250" width="600" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- 로그인 -->
+        <mxCell id="login_process" value="로그인 프로세스" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="160" y="280" width="560" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="login_step1" value="1. 사용자가 학번/비밀번호 입력 (useLoginForm 훅)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="login_process">
+          <mxGeometry y="30" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="login_step2" value="2. 로그인 API 호출 (loginRequest 함수)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="login_process">
+          <mxGeometry y="60" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="login_step3" value="3. 백엔드에서 JWT 토큰 발급 (accessToken은 LocalStorage, refreshToken은 HTTP-only 쿠키)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="login_process">
+          <mxGeometry y="90" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="login_step4" value="4. AuthContext의 login 함수 호출로 인증 상태 업데이트 및 홈 화면으로 리다이렉트" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="login_process">
+          <mxGeometry y="120" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 토큰 갱신 -->
+        <mxCell id="token_refresh_process" value="토큰 갱신 프로세스" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="160" y="450" width="560" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="token_step1" value="1. API 요청 시 401 오류 발생 (액세스 토큰 만료)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="token_refresh_process">
+          <mxGeometry y="30" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="token_step2" value="2. axios 인터셉터가 자동으로 /api/user/refresh-token 엔드포인트로 요청" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="token_refresh_process">
+          <mxGeometry y="60" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="token_step3" value="3. HTTP-only 쿠키의 리프레시 토큰을 사용하여 새 액세스 토큰 발급" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="token_refresh_process">
+          <mxGeometry y="90" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="token_step4" value="4. 새 액세스 토큰으로 원래 요청 재시도" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="token_refresh_process">
+          <mxGeometry y="120" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 로그아웃 -->
+        <mxCell id="logout_process" value="로그아웃 프로세스" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="160" y="620" width="560" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="logout_step1" value="1. 사용자가 로그아웃 버튼 클릭" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="logout_process">
+          <mxGeometry y="30" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="logout_step2" value="2. AuthContext의 logout 함수 호출, /api/user/logout API 요청 발생" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="logout_process">
+          <mxGeometry y="60" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="logout_step3" value="3. 백엔드에서 HTTP-only 쿠키 제거, 프론트엔드에서 LocalStorage 토큰 삭제 및 로그인 페이지로 이동" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="logout_process">
+          <mxGeometry y="90" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 일반 API 호출 프로세스 섹션 -->
+        <mxCell id="api_section" value="일반 API 호출 프로세스" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="120" y="760" width="600" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- API 호출 -->
+        <mxCell id="api_process" value="API 요청 처리 프로세스" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="160" y="790" width="560" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="api_step1" value="1. Axios 인스턴스를 통한 API 호출" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="api_process">
+          <mxGeometry y="30" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="api_step2" value="2. 요청 인터셉터는 자동으로 Authorization 헤더에 Bearer 토큰 추가" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="api_process">
+          <mxGeometry y="60" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="api_step3" value="3. 요청이 백엔드로 전송되고, 백엔드는 토큰을 검증하여 요청 처리" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="api_process">
+          <mxGeometry y="90" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="api_step4" value="4. 응답 인터셉터는 오류를 처리하고, 필요 시 토큰 갱신 프로세스 시작" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="api_process">
+          <mxGeometry y="120" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- 사용자 경험 흐름 섹션 -->
+        <mxCell id="ux_section" value="사용자 경험 흐름" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="120" y="960" width="600" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- 사용자 흐름 다이어그램 -->
+        <mxCell id="login_state" value="로그인 화면" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="160" y="990" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="home_state" value="홈 화면" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="380" y="990" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="profile_state" value="프로필 화면" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="600" y="990" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="login_to_home" value="로그인 성공" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="login_state" target="home_state">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="820" as="sourcePoint" />
+            <mxPoint x="440" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="home_to_profile" value="프로필 버튼 클릭" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="home_state" target="profile_state">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="820" as="sourcePoint" />
+            <mxPoint x="440" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="profile_to_home" value="뒤로 가기" style="endArrow=classic;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="profile_state" target="home_state">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="820" as="sourcePoint" />
+            <mxPoint x="440" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="any_to_login" value="로그아웃" style="endArrow=classic;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="home_state" target="login_state">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="820" as="sourcePoint" />
+            <mxPoint x="440" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 프로필 수정 프로세스 -->
+        <mxCell id="profile_edit_process" value="프로필 수정 프로세스" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1080" width="560" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="profile_edit_step1" value="1. 사용자가 프로필 편집 버튼 클릭, SetProfile 컴포넌트 표시" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="profile_edit_process">
+          <mxGeometry y="30" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="profile_edit_step2" value="2. 사용자 정보 수정 및 이미지 업로드 (FormData 사용)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="profile_edit_process">
+          <mxGeometry y="60" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="profile_edit_step3" value="3. 변경하기 버튼 클릭 시 API 호출 (프로필 이미지: POST, 사용자 정보: PATCH)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="profile_edit_process">
+          <mxGeometry y="90" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="profile_edit_step4" value="4. 성공 시 알림 표시 및 페이지 새로고침으로 변경사항 반영" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;" vertex="1" parent="profile_edit_process">
+          <mxGeometry y="120" width="560" height="30" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile> 

@@ -1,6 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from "./setProfile.module.scss";
 import api from '../../api/axiosInstance';
+import { 
+    FaCamera, 
+    FaUser, 
+    FaEnvelope, 
+    FaPhone, 
+    FaBuilding, 
+    FaQuoteLeft, 
+    FaCode, 
+    FaSave, 
+    FaSpinner, 
+    FaTimes, 
+    FaUserCircle 
+} from 'react-icons/fa';
 
 export const SetProfile = (props) => {
     const { userInfo = {}, setHandleTogle, handleTogle } = props;
@@ -45,15 +58,50 @@ export const SetProfile = (props) => {
         };
     }, [setHandleTogle]); // 실제 사용하는 props만 의존성으로 추가
 
-    // 정보 필드 구성
+    // 정보 필드 구성 (아이콘 포함)
     const infoFields = [
-        { id: 'nick_name', label: "닉네임", value: formData.nick_name, originalValue: userInfo?.Profile?.nick_name || '' },
-        { id: 'email', label: "이메일", value: formData.email, originalValue: userInfo?.Profile?.email || '' },
-        { id: 'phone', label: "전화번호", value: formData.phone, originalValue: userInfo?.Profile?.phone || '' },
-        { id: 'company', label: "회사", value: formData.company, originalValue: userInfo?.Profile?.company || '' },
-        { id: 'bio', label: "자기소개", value: formData.bio, originalValue: userInfo?.Profile?.bio || '' },
-        { id: 'skill', label: "기술 태그", value: Array.isArray(formData.skill) ? formData.skill.map(s => s.name).join(', ') : '', 
-          originalValue: Array.isArray(userInfo?.Profile?.skill) ? userInfo.Profile.skill.map(s => s.name).join(', ') : '' },
+        { 
+            id: 'nick_name', 
+            label: "닉네임", 
+            value: formData.nick_name, 
+            originalValue: userInfo?.Profile?.nick_name || '',
+            icon: <FaUser size={16} color="#0ea300" />
+        },
+        { 
+            id: 'email', 
+            label: "이메일", 
+            value: formData.email, 
+            originalValue: userInfo?.Profile?.email || '',
+            icon: <FaEnvelope size={16} color="#0ea300" />
+        },
+        { 
+            id: 'phone', 
+            label: "전화번호", 
+            value: formData.phone, 
+            originalValue: userInfo?.Profile?.phone || '',
+            icon: <FaPhone size={16} color="#0ea300" />
+        },
+        { 
+            id: 'company', 
+            label: "회사", 
+            value: formData.company, 
+            originalValue: userInfo?.Profile?.company || '',
+            icon: <FaBuilding size={16} color="#0ea300" />
+        },
+        { 
+            id: 'bio', 
+            label: "자기소개", 
+            value: formData.bio, 
+            originalValue: userInfo?.Profile?.bio || '',
+            icon: <FaQuoteLeft size={16} color="#0ea300" />
+        },
+        { 
+            id: 'skill', 
+            label: "기술 태그", 
+            value: Array.isArray(formData.skill) ? formData.skill.map(s => s.name).join(', ') : '', 
+            originalValue: Array.isArray(userInfo?.Profile?.skill) ? userInfo.Profile.skill.map(s => s.name).join(', ') : '',
+            icon: <FaCode size={16} color="#0ea300" />
+        },
     ];
     
     const handleImageClick = () => {
@@ -79,21 +127,61 @@ export const SetProfile = (props) => {
         }
     };
     
+    // 전화번호 포맷팅 함수
+    const formatPhoneNumber = (phoneNumber) => {
+        // 숫자만 추출
+        const digits = phoneNumber.replace(/\D/g, '');
+        
+        // 전화번호 길이에 따라 포맷팅
+        if (digits.length <= 3) {
+            return digits;
+        } else if (digits.length <= 7) {
+            return digits.slice(0, 3) + '-' + digits.slice(3);
+        } else if (digits.length <= 11) {
+            // 휴대폰 번호 (010-XXXX-XXXX 형식)
+            return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7, 11);
+        }
+        
+        // 11자리를 초과하면 11자리까지만 사용
+        if (digits.length > 11) {
+            return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7, 11);
+        }
+        
+        return phoneNumber;
+    };
+    
     // 입력 필드 변경 처리
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-        
-        // 변경 여부 확인 - 비동기 업데이트 문제 해결
-        setFormData(prevFormData => {
-            const updatedFormData = { ...prevFormData, [name]: value };
-            checkIfChanged(updatedFormData);
-            return updatedFormData;
-        });
+        // 전화번호인 경우 포맷팅 적용
+        if (name === 'phone') {
+            const formattedValue = formatPhoneNumber(value);
+            
+            setFormData(prev => ({
+                ...prev,
+                [name]: formattedValue
+            }));
+            
+            // 변경 여부 확인 - 비동기 업데이트 문제 해결
+            setFormData(prevFormData => {
+                const updatedFormData = { ...prevFormData, [name]: formattedValue };
+                checkIfChanged(updatedFormData);
+                return updatedFormData;
+            });
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }));
+            
+            // 변경 여부 확인 - 비동기 업데이트 문제 해결
+            setFormData(prevFormData => {
+                const updatedFormData = { ...prevFormData, [name]: value };
+                checkIfChanged(updatedFormData);
+                return updatedFormData;
+            });
+        }
     };
     
     // 변경 여부 검사
@@ -239,10 +327,21 @@ export const SetProfile = (props) => {
         // 이벤트 버블링 중지
         e.stopPropagation();
     };
+    
+    const handleCloseModal = () => {
+        if (setHandleTogle) {
+            setHandleTogle(false);
+        }
+    };
 
     return (
         <div className={styles.modalBackground} onClick={handleBackgroundClick}>
             <div className={styles.modalContent} onClick={handleContentClick}>
+                <button className={styles.closeButton} onClick={handleCloseModal}>
+                    <FaTimes size={18} />
+                </button>
+                <h2 className={styles.modalTitle}>프로필 수정</h2>
+                
                 <div className={styles.profileHeader}>
                     <div className={styles.profileImageContainer}>
                         <div 
@@ -250,9 +349,18 @@ export const SetProfile = (props) => {
                             onClick={handleImageClick}
                             style={getImageUrl() ? { backgroundImage: `url(${getImageUrl()})` } : {}}
                         >
-                            {isUploading && <div className={styles.uploadingOverlay}>업로드 중...</div>}
-                            <div className={styles.editBadge}>
-                            </div>
+                            {!getImageUrl() && (
+                                <FaUserCircle size={60} color="#0ea300" className={styles.defaultAvatar} />
+                            )}
+                            {isUploading ? (
+                                <div className={styles.uploadingOverlay}>
+                                    <FaSpinner className={styles.spinner} size={24} color="#fff" />
+                                </div>
+                            ) : (
+                                <div className={styles.cameraOverlay}>
+                                    <FaCamera size={20} color="#fff" />
+                                </div>
+                            )}
                         </div>
                         <input 
                             ref={fileInputRef}
@@ -267,7 +375,10 @@ export const SetProfile = (props) => {
                 <div className={styles.profileInfo}>
                     {infoFields.map((field) => (
                         <div key={field.id} className={styles.infoField}>
-                            <div className={styles.label}>{field.label}</div>
+                            <div className={styles.labelContainer}>
+                                <span className={styles.iconWrapper}>{field.icon}</span>
+                                <div className={styles.label}>{field.label}</div>
+                            </div>
                             <input
                                 type="text"
                                 name={field.id}
@@ -281,17 +392,34 @@ export const SetProfile = (props) => {
                 </div>
                 
                 {/* 변경 버튼 - 변경사항이 있을 때만 표시 */}
-                {isChanged && (
-                    <div className={styles.buttonContainer}>
+                <div className={styles.buttonContainer}>
+                    <button 
+                        className={styles.cancelButton}
+                        onClick={handleCloseModal}
+                    >
+                        취소
+                    </button>
+                    
+                    {isChanged && (
                         <button 
                             className={styles.saveButton}
                             onClick={handleSaveChanges}
                             disabled={isUploading}
                         >
-                            {isUploading ? '저장 중...' : '변경하기'}
+                            {isUploading ? (
+                                <>
+                                    <FaSpinner className={styles.spinner} size={14} />
+                                    <span>저장 중...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <FaSave size={14} />
+                                    <span>변경사항 저장</span>
+                                </>
+                            )}
                         </button>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );

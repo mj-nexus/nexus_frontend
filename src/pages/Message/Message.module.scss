@@ -363,6 +363,7 @@
   display: flex;
   margin-bottom: 16px;
   align-items: flex-end;
+  width: 100%;
 }
 
 .message-group-sent {
@@ -385,6 +386,7 @@
   display: flex;
   flex-direction: column;
   max-width: 70%;
+  width: auto;
 }
 
 .message-sender-name {
@@ -403,40 +405,54 @@
   font-size: 15px;
   animation: fadeIn 0.3s ease;
   line-height: 1.4;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .message-bubble {
   display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  box-sizing: border-box;
 }
 
 .message-content {
   word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  min-width: 30px;
 }
 
 .message-sent {
   background-color: #34c759;
   color: #fff;
   border-bottom-right-radius: 4px;
+  align-self: flex-end;
 }
 
 .message-received {
   background-color: #f0f0f0;
   color: #000;
   border-bottom-left-radius: 4px;
+  align-self: flex-start;
 }
 
 .message-time {
   font-size: 11px;
   color: #8e8e93;
   margin-top: 4px;
+  white-space: nowrap;
+  display: block;
 }
 
 .time-sent {
   text-align: right;
+  padding-right: 4px;
 }
 
 .time-received {
   text-align: left;
+  padding-left: 4px;
 }
 
 .messages-empty {
@@ -911,5 +927,35 @@
   to { 
     opacity: 1; 
     transform: scale(1) translateY(0);
+  }
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .message-bubble-container {
+    max-width: 85%;
+  }
+  
+  .message {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .message-sender-name {
+    font-size: 12px;
+  }
+  
+  .message-time {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-bubble-container {
+    max-width: 90%;
+  }
+  
+  .messages-container {
+    padding: 10px;
   }
 }

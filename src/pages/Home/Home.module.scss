@@ -252,6 +252,12 @@
   }
 }
 
+.userImageContainer {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
 .userAvatar {
   width: 50px;
   height: 50px;
@@ -264,6 +270,18 @@
   width: 50px;
   height: 50px;
   color: #ccc;
+}
+
+.onlineStatusIndicator {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #34D399; /* 초록색 */
+  border-radius: 50%;
+  bottom: 3px;
+  right: 3px;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .userInfo {

@@ -11,3 +11,13 @@ export const getUserList = async () => {
         return [];
     }
 };
+
+export const getUsersOnlineStatus = async () => {
+    try {
+        const response = await api.get("/api/user/online-status");
+        return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+        console.error("사용자 온라인 상태를 가져오는 중 오류 발생:", error);
+        return [];
+    }
+};

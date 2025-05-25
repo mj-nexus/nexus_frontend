@@ -239,18 +239,22 @@ const ChatRoom = ({ roomId, currentUserId, roomInfo, onToggleRoomDetails }) => {
                     {group.senderName}
                   </div>
                 )}
-                {group.messages.map((msg, msgIndex) => (
-                  <div 
-                    key={msgIndex} 
-                    className={`${styles.message} ${styles["message-bubble"]} ${group.isCurrentUser ? styles["message-sent"] : styles["message-received"]}`}
-                  >
-                    <div className={styles["message-content"]}>
-                      {typeof msg.content === 'object' 
-                        ? JSON.stringify(msg.content) 
-                        : msg.content}
+                {group.messages.map((msg, msgIndex) => {
+                  const messageContent = typeof msg.content === 'object' 
+                    ? JSON.stringify(msg.content) 
+                    : msg.content;
+                    
+                  return (
+                    <div 
+                      key={msgIndex} 
+                      className={`${styles.message} ${styles["message-bubble"]} ${group.isCurrentUser ? styles["message-sent"] : styles["message-received"]}`}
+                    >
+                      <div className={styles["message-content"]}>
+                        {messageContent}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 <div className={`${styles["message-time"]} ${group.isCurrentUser ? styles["time-sent"] : styles["time-received"]}`}>
                   {group.time}
                 </div>

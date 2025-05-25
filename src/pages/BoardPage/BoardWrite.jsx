@@ -3,19 +3,56 @@ import React, { useState } from 'react';
 import styles from './BoardWrite.module.scss';
 import { boardService } from '../../services/boardService';
 import { useNavigate } from 'react-router-dom';
+import { validateProfanity } from '../../utils/profanityFilter';
 
 export const BoardWrite = () => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
     const [content, setContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errors, setErrors] = useState({ title: '', content: '' });
     const navigate = useNavigate();
     const writer_id = localStorage.getItem('userId');
     const writer = localStorage.getItem('name');
 
+    // 입력값 변경 시 유효성 검사
+    const validateInput = (name, value) => {
+        const validationResult = validateProfanity(value);
+        
+        setErrors(prev => ({
+            ...prev,
+            [name]: validationResult.errorMessage
+        }));
+        
+        return validationResult.isValid;
+    };
+
+    // 제목 변경 핸들러
+    const handleTitleChange = (e) => {
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        validateInput('title', newTitle);
+    };
+
+    // 내용 변경 핸들러
+    const handleContentChange = (e) => {
+        const newContent = e.target.value;
+        setContent(newContent);
+        validateInput('content', newContent);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isSubmitting) return;
+        
+        // 제출 전 최종 유효성 검사
+        const isTitleValid = validateInput('title', title);
+        const isContentValid = validateInput('content', content);
+        
+        if (!isTitleValid || !isContentValid) {
+            alert('부적절한 표현이 포함되어 있습니다. 수정 후 다시 시도해주세요.');
+            return;
+        }
         
         setIsSubmitting(true);
         const boardData = {
@@ -60,24 +97,28 @@ export const BoardWrite = () => {
                         id="title"
                         type="text"
                         value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        onChange={handleTitleChange}
                         required
                         placeholder="제목을 입력하세요"
+                        className={errors.title ? styles.errorInput : ''}
                     />
+                    {errors.title && <p className={styles.errorText}>{errors.title}</p>}
                 </div>
                 <div className={styles.formGroup}>
                     <label htmlFor="content">내용</label>
                     <textarea
                         id="content"
                         value={content}
-                        onChange={e => setContent(e.target.value)}
+                        onChange={handleContentChange}
                         required
                         placeholder="내용을 입력하세요"
                         rows={8}
+                        className={errors.content ? styles.errorInput : ''}
                     />
+                    {errors.content && <p className={styles.errorText}>{errors.content}</p>}
                 </div>
                 <div className={styles.buttonGroup}>
-                    <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                    <button type="submit" className={styles.submitBtn} disabled={isSubmitting || errors.title || errors.content}>
                         {isSubmitting ? '저장 중...' : '등록'}
                     </button>
                     <button 

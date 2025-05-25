@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { updateComment, deleteComment } from '../../services/commentService';
+import { validateProfanity } from '../../utils/profanityFilter';
 
 const THEME_COLOR = '#0ea300';
 const THEME_COLOR_LIGHT = '#e6fbe6';
 const THEME_COLOR_DARK = '#087a00';
 const BORDER_COLOR = '#e0e0e0';
+const ERROR_COLOR = '#e74c3c';
 
 export default function CommentItem({ comment, userId, onUpdate }) {
   const [isEdit, setIsEdit] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
+  const [editError, setEditError] = useState('');
 
   // 날짜 포맷 (예시)
   const date = comment.regdate
@@ -21,18 +24,55 @@ export default function CommentItem({ comment, userId, onUpdate }) {
     ? profile.nick_name
     : profile.user_name || `user${comment.user_id}`;
 
+  // 수정 내용 변경 시 유효성 검사
+  const handleEditChange = (e) => {
+    const newContent = e.target.value;
+    setEditContent(newContent);
+    
+    if (newContent.trim()) {
+      const validationResult = validateProfanity(newContent);
+      setEditError(validationResult.errorMessage);
+    } else {
+      setEditError('');
+    }
+  };
+
   // 댓글 수정
   const handleEdit = async () => {
-    await updateComment(comment.comment_id, editContent);
-    setIsEdit(false);
-    onUpdate();
+    if (!editContent.trim()) {
+      setEditError('댓글 내용을 입력해주세요.');
+      return;
+    }
+    
+    // 제출 전 최종 유효성 검사
+    const validationResult = validateProfanity(editContent);
+    
+    if (!validationResult.isValid) {
+      setEditError(validationResult.errorMessage);
+      return;
+    }
+    
+    try {
+      await updateComment(comment.comment_id, editContent);
+      setIsEdit(false);
+      setEditError('');
+      onUpdate();
+    } catch (error) {
+      console.error('댓글 수정 오류:', error);
+      alert('댓글 수정에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   // 댓글 삭제
   const handleDelete = async () => {
     if (window.confirm('댓글을 삭제하시겠습니까?')) {
-      await deleteComment(comment.comment_id);
-      onUpdate();
+      try {
+        await deleteComment(comment.comment_id);
+        onUpdate();
+      } catch (error) {
+        console.error('댓글 삭제 오류:', error);
+        alert('댓글 삭제에 실패했습니다. 다시 시도해주세요.');
+      }
     }
   };
 
@@ -57,37 +97,64 @@ export default function CommentItem({ comment, userId, onUpdate }) {
         <div>
           <textarea
             value={editContent}
-            onChange={e => setEditContent(e.target.value)}
+            onChange={handleEditChange}
             style={{
               width: '100%',
               minHeight: 40,
               borderRadius: 6,
-              border: `1.5px solid ${BORDER_COLOR}`,
+              border: editError ? `1.5px solid ${ERROR_COLOR}` : `1.5px solid ${BORDER_COLOR}`,
               padding: 8,
-              fontSize: 15
+              fontSize: 15,
+              backgroundColor: editError ? '#fff8f8' : '#fff'
             }}
           />
+          {editError && (
+            <div style={{
+              color: ERROR_COLOR,
+              fontSize: 13,
+              marginTop: 4,
+              marginBottom: 8,
+              padding: '4px 8px',
+              backgroundColor: 'rgba(231, 76, 60, 0.1)',
+              borderRadius: 4
+            }}>
+              {editError}
+            </div>
+          )}
           <div style={{ marginTop: 8 }}>
             <button
               onClick={handleEdit}
+              disabled={!editContent.trim() || editError}
               style={{
-                background: THEME_COLOR,
+                background: !editContent.trim() || editError ? '#ccc' : THEME_COLOR,
                 color: '#fff',
                 border: 'none',
                 borderRadius: 6,
                 padding: '6px 16px',
                 fontWeight: 600,
                 marginRight: 8,
-                cursor: 'pointer',
+                cursor: !editContent.trim() || editError ? 'not-allowed' : 'pointer',
                 transition: 'background 0.2s',
               }}
-              onMouseOver={e => (e.currentTarget.style.background = THEME_COLOR_DARK)}
-              onMouseOut={e => (e.currentTarget.style.background = THEME_COLOR)}
+              onMouseOver={e => {
+                if (!(!editContent.trim() || editError)) {
+                  e.currentTarget.style.background = THEME_COLOR_DARK;
+                }
+              }}
+              onMouseOut={e => {
+                if (!(!editContent.trim() || editError)) {
+                  e.currentTarget.style.background = THEME_COLOR;
+                }
+              }}
             >
               저장
             </button>
             <button
-              onClick={() => setIsEdit(false)}
+              onClick={() => {
+                setIsEdit(false);
+                setEditContent(comment.content);
+                setEditError('');
+              }}
               style={{
                 background: '#eee',
                 color: '#333',

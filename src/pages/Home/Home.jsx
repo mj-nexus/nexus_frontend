@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Home.module.scss";
 import { FaCalendarAlt, FaChartLine, FaUserFriends, FaBell, FaNewspaper, FaRegTimesCircle, FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
 import TimeTable from "../../components/TimeTable/TimeTable";
-import { getUserList } from '../../utils/getUserListUtil';
+import { getUserList, getUsersOnlineStatus } from '../../utils/getUserListUtil';
 import { seniorBoardService } from '../../services/seniorBoardService';
 import { boardService } from '../../services/boardService';
-import { useNavigate } from "react-router-dom";
 
 // 인기 게시글 컴포넌트
 const PopularPosts = () => {
@@ -154,12 +154,30 @@ const RecommendedUsers = () => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const userList = await getUserList();
+        // 사용자 목록과 온라인 상태를 병렬로 가져옴
+        const [userList, onlineStatusList] = await Promise.all([
+          getUserList(),
+          getUsersOnlineStatus()
+        ]);
+        
+        // 온라인 상태 데이터를 Map으로 변환하여 빠르게 찾을 수 있도록 함
+        const onlineStatusMap = new Map();
+        onlineStatusList.forEach(user => {
+          onlineStatusMap.set(user.user_id, user.onlineStatus);
+        });
+        
+        // 사용자 데이터에 온라인 상태 정보를 추가
+        const usersWithOnlineStatus = userList.map(user => ({
+          ...user,
+          onlineStatus: onlineStatusMap.get(user.user_id) || false
+        }));
+        
         // 현재 로그인한 사용자 제외
-        const filteredList = userList.filter(user => user.user_id.toString() !== currentUserId);
+        const filteredList = usersWithOnlineStatus.filter(user => user.user_id.toString() !== currentUserId);
         setUsers(filteredList);
         setFilteredUsers(filteredList);
       } catch (error) {
+        console.error("사용자 목록 또는 온라인 상태를 가져오는 중 오류 발생:", error);
         setUsers([]);
         setFilteredUsers([]);
       } finally {
@@ -186,16 +204,20 @@ const RecommendedUsers = () => {
 
   // 프로필 이미지 렌더링
   const getProfileImage = (user) => {
-    if (user.profile_image) {
-      return (
-        <img
-          src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${user.profile_image}`}
-          alt={user.nick_name || user.user_name || '사용자'}
-          className={styles.userAvatar}
-        />
-      );
-    }
-    return <FaUserCircle className={styles.userAvatarIcon} />;
+    return (
+      <div className={styles.userImageContainer}>
+        {user.profile_image ? (
+          <img
+            src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${user.profile_image}`}
+            alt={user.nick_name || user.user_name || '사용자'}
+            className={styles.userAvatar}
+          />
+        ) : (
+          <FaUserCircle className={styles.userAvatarIcon} />
+        )}
+        {user.onlineStatus === true && <div className={styles.onlineStatusIndicator}></div>}
+      </div>
+    );
   };
 
   // 이름/닉네임
@@ -237,7 +259,6 @@ const RecommendedUsers = () => {
               <li 
                 key={user.user_id} 
                 className={styles.userItem} 
-                style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid #eee', cursor: 'pointer' }}
                 onClick={() => handleUserClick(user.user_id)}
               >
                 {getProfileImage(user)}

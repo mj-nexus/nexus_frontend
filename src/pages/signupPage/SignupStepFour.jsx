@@ -3,6 +3,7 @@ import './Signup.scss';
 import { useNavigate } from 'react-router-dom';
 import { SignupContext } from '../../context/SignupContext';
 import { signupSubmit } from '../../utils/signupUtil';
+import { FaSpinner } from 'react-icons/fa';
 
 const skillsList = [
   { name: 'FullStack', color: 'red' },
@@ -19,6 +20,8 @@ const skillsList = [
 export const SkillSelector = () => {
   const { userData, signupMemory, clearMemory } = useContext(SignupContext);
   const [selectedSkills, setSelectedSkills] = useState(userData.skill || []);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [signupError, setSignupError] = useState('');
   const navigate = useNavigate();
 
   const handleSkillClick = (skill) => {
@@ -31,20 +34,40 @@ export const SkillSelector = () => {
 
     setSelectedSkills(updatedSkills);
     signupMemory({ ...userData, skill: updatedSkills });
-
   };
 
   const submit = async () => {
-    console.log(userData)
+    setIsSubmitting(true);
+    setSignupError('');
+    
     try {
       const res = await signupSubmit(userData);
       if (res && res.message === "회원가입 성공") {
         alert("회원가입이 완료되었습니다!");
         clearMemory();
-        navigate("/");
+        navigate("/login");
+      } else {
+        setSignupError('회원가입 처리 중 오류가 발생했습니다.');
       }
     } catch (err) {
-      alert("회원가입 실패: " + (err.response?.data?.message || err.message));
+      console.error('회원가입 오류:', err);
+      
+      // 서버 응답에 따른 적절한 오류 메시지 설정
+      if (err.response) {
+        if (err.response.status === 409) {
+          setSignupError("이미 등록된 학번입니다.");
+        } else if (err.response.data && err.response.data.message) {
+          setSignupError(err.response.data.message);
+        } else {
+          setSignupError("회원가입 중 오류가 발생했습니다.");
+        }
+      } else if (err.request) {
+        setSignupError("서버에 연결할 수 없습니다. 네트워크 상태를 확인해주세요.");
+      } else {
+        setSignupError("회원가입 요청 중 오류가 발생했습니다.");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,9 +105,33 @@ export const SkillSelector = () => {
             ))}
           </div>
         </div>
+        
+        {signupError && (
+          <div className="error-message">
+            {signupError}
+          </div>
+        )}
+        
         <div className="button-group">
-          <button className="btn prev-btn" onClick={() => navigate('/signup/step3')}>이전</button>
-          <button className="btn submit-btn" onClick={submit}>제출</button>
+          <button 
+            className="btn prev-btn" 
+            onClick={() => navigate('/signup/step3')}
+            disabled={isSubmitting}
+          >
+            이전
+          </button>
+          <button 
+            className="btn submit-btn" 
+            onClick={submit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <FaSpinner className="spinner" />
+                제출 중...
+              </>
+            ) : "제출"}
+          </button>
         </div>
       </div>
     </div>
