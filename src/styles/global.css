@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  color: #1D2939;
+  background-color: #F5F9FF;
+}
+
+/* 기본 애니메이션 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 버튼 스타일 */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  
+  .btn-sm {
+    @apply text-sm px-3 py-1.5;
+  }
+  
+  .btn-md {
+    @apply text-base px-4 py-2;
+  }
+  
+  .btn-lg {
+    @apply text-lg px-5 py-2.5;
+  }
+  
+  .btn-primary {
+    @apply btn btn-md bg-primary text-white hover:bg-primary-light focus:ring-primary shadow-button;
+  }
+  
+  .btn-secondary {
+    @apply btn btn-md bg-white text-primary border border-primary hover:bg-secondary focus:ring-primary;
+  }
+  
+  .btn-accent {
+    @apply btn btn-md bg-accent text-white hover:bg-accent-light focus:ring-accent;
+  }
+  
+  .btn-success {
+    @apply btn btn-md bg-success text-white hover:bg-success-light focus:ring-success;
+  }
+  
+  .btn-ghost {
+    @apply btn btn-md bg-transparent text-gray-dark hover:bg-secondary focus:ring-gray;
+  }
+  
+  /* 카드 스타일 */
+  .card {
+    @apply bg-white rounded-xl shadow-card p-6;
+  }
+  
+  /* 입력 필드 스타일 */
+  .form-label {
+    @apply block text-sm font-medium text-gray-dark mb-1.5;
+  }
+  
+  .form-input {
+    @apply w-full px-4 py-2.5 rounded-lg border border-gray-light bg-white 
+           focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200;
+  }
+  
+  .form-input-error {
+    @apply border-danger focus:border-danger focus:ring-danger;
+  }
+  
+  .form-error {
+    @apply text-xs text-danger mt-1;
+  }
+  
+  /* 체크박스 스타일 */
+  .form-checkbox {
+    @apply w-4 h-4 text-primary rounded border-gray focus:ring-primary focus:ring-2;
+  }
+  
+  /* 뱃지 스타일 */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply badge bg-primary-light/20 text-primary;
+  }
+  
+  .badge-success {
+    @apply badge bg-success-light/20 text-success;
+  }
+  
+  .badge-warning {
+    @apply badge bg-warning-light/20 text-warning-dark;
+  }
+  
+  .badge-danger {
+    @apply badge bg-danger-light/20 text-danger;
+  }
+  
+  /* 알림 스타일 */
+  .alert {
+    @apply p-4 rounded-lg mb-4;
+  }
+  
+  .alert-info {
+    @apply alert bg-info-light/20 text-info;
+  }
+  
+  .alert-success {
+    @apply alert bg-success-light/20 text-success;
+  }
+  
+  .alert-warning {
+    @apply alert bg-warning-light/20 text-warning-dark;
+  }
+  
+  .alert-danger {
+    @apply alert bg-danger-light/20 text-danger;
+  }
+  
+  /* 테이블 스타일 */
+  .table-container {
+    @apply overflow-x-auto w-full;
+  }
+  
+  .table {
+    @apply min-w-full border-collapse;
+  }
+  
+  .table th {
+    @apply text-left bg-secondary py-3 px-4 text-sm font-medium text-gray-dark border-b border-gray-light;
+  }
+  
+  .table td {
+    @apply py-3 px-4 text-sm text-gray-dark border-b border-gray-light;
+  }
+  
+  .table tr:hover {
+    @apply bg-secondary/50;
+  }
+  
+  /* 타이틀 스타일 */
+  .page-title {
+    @apply text-2xl font-bold text-dark mb-6;
+  }
+  
+  .section-title {
+    @apply text-xl font-semibold text-dark mb-4;
+  }
+}
+
+/* 기본 버튼 스타일 */
+.btn-primary {
+  @apply bg-primary text-white rounded-lg px-5 py-2.5 font-medium transition-all 
+  hover:bg-primary-light focus:ring-2 focus:ring-primary focus:ring-opacity-50 shadow-button;
+}
+
+.btn-secondary {
+  @apply bg-white text-primary border border-primary rounded-lg px-5 py-2.5 font-medium transition-all
+  hover:bg-secondary focus:ring-2 focus:ring-primary focus:ring-opacity-50;
+}
+
+.btn-accent {
+  @apply bg-accent text-white rounded-lg px-5 py-2.5 font-medium transition-all
+  hover:bg-accent-light focus:ring-2 focus:ring-accent focus:ring-opacity-50;
+}
+
+/* 카드 스타일 */
+.card {
+  @apply bg-white rounded-xl shadow-card p-6;
+}
+
+/* 입력 필드 스타일 */
+.input {
+  @apply w-full px-4 py-3 rounded-lg border border-gray bg-white focus:outline-none 
+  focus:ring-2 focus:ring-primary focus:border-primary transition-all text-dark;
+}
+
+/* 애니메이션 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 헤더 스타일 */
+.page-header {
+  @apply text-2xl font-bold text-dark mb-6;
+}
+
+/* 레이블 스타일 */
+.form-label {
+  @apply text-sm font-medium text-gray-dark mb-2 block;
+}
+
+/* 배지 스타일 */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+  @apply bg-primary bg-opacity-10 text-primary;
+}
+
+.badge-success {
+  @apply bg-success bg-opacity-10 text-success;
+}
+
+.badge-warning {
+  @apply bg-warning bg-opacity-10 text-warning;
+}
+
+.badge-accent {
+  @apply bg-accent bg-opacity-10 text-accent;
+}
+
+/* 상태 아이콘 */
+.status-dot {
+  @apply w-2 h-2 rounded-full inline-block mr-2;
+}
+
+.status-online {
+  @apply bg-success;
+}
+
+.status-offline {
+  @apply bg-gray;
+}
+
+.status-busy {
+  @apply bg-warning;
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c9d4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8a94a6;
+} 

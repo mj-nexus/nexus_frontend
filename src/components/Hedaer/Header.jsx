@@ -10,6 +10,7 @@ export const Header = () => {
   const { userId } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
+  const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -48,10 +49,11 @@ export const Header = () => {
       </div>
       <div className="profile_group" onClick={() => navigate('/profile')}>
         <div className="group">
-          {(userInfo && userInfo.profile_image) ? 
+          {(userInfo && userInfo.profile_image && !imgError) ? 
           (<img
             src={getProfileImageUrl()}
             alt="프로필 이미지"
+            onError={() => setImgError(true)}
           />) : (
             <FaUserCircle size={50} color="#ccc" />
           )}

@@ -7,18 +7,22 @@ import api from "../../api/axiosInstance";
 
 const INFO_LIST = ["user_name", "company", "student_id", "email", "bio", "skill", "phone"];
 
-const Avatar = ({ profileImage }) => (
-  <div className="avatar">
-    {profileImage ? (
-      <img
-        src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${profileImage}`}
-        alt="avatar"
-      />
-    ) : (
-      <FaUserCircle size={50} color="#ccc" />
-    )}
-  </div>
-);
+const Avatar = ({ profileImage }) => {
+  const [imgError, setImgError] = useState(false);
+  return (
+    <div className="avatar">
+      {profileImage && !imgError ? (
+        <img
+          src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${profileImage}`}
+          alt="avatar"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <FaUserCircle size={50} color="#ccc" />
+      )}
+    </div>
+  );
+};
 
 const InfoContainer = ({ userInfo }) => {
   return (

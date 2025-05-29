@@ -7,13 +7,14 @@ import Toggle from "../../components/Toggle/Toggle";
 import BigButton from "../../components/Button/BigButton";
 import "./style.scss";
 
-const Input = ({ label, value, onChange, error }) => (
+const Input = ({ label, value, onChange, error, onKeyDown }) => (
   <div className="input_box">
     <p>{label}</p>
     <input
       type={label === "비밀번호" ? "password" : "text"}
       value={value}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       className={error ? "error-input" : ""}
     />
   </div>
@@ -47,12 +48,18 @@ export const Login = () => {
             value={student_id} 
             onChange={(e) => setStudentId(e.target.value)} 
             error={loginError}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleLogin();
+            }}
           />
           <Input 
             label="비밀번호" 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             error={loginError}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleLogin();
+            }}
           />
           
           {loginError && (

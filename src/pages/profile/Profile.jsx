@@ -17,21 +17,72 @@ import { SetProfile } from "./SetProfile";
 
 const INFO_LIST = ["user_name", "company", "student_id", "email", "bio", "skill", "phone"];
 
-const Avatar = ({ profileImage }) => (
-  <div className="avatar">
-    {profileImage ? (
-      <img
-        src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${profileImage}`}
-        alt="avatar"
-      />
-    ) : (
-      <FaUserCircle size={80} color="#0ea300" />
-    )}
-    <div className="avatar-overlay">
-      <FaCamera size={24} color="#fff" />
+const Avatar = ({ profileImage }) => {
+  const [imgError, setImgError] = React.useState(false);
+  const [hover, setHover] = React.useState(false);
+  const [imgLoading, setImgLoading] = React.useState(!!profileImage);
+  return (
+    <div
+      className="avatar"
+      style={{
+        width: 140,
+        height: 140,
+        borderRadius: '50%',
+        background: 'linear-gradient(135deg, #e6f9e6 60%, #c6f7d0 100%)',
+        boxShadow: '0 2px 12px rgba(14,163,0,0.10)',
+        border: '4px solid #fff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        transition: 'transform 0.3s',
+        transform: hover ? 'scale(1.04)' : 'none',
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {profileImage && !imgError ? (
+        <>
+          <img
+            src={`${process.env.REACT_APP_BACKEND_HOST}/upload/${profileImage}`}
+            alt="avatar"
+            onError={() => setImgError(true)}
+            onLoad={() => setImgLoading(false)}
+            style={{
+              width: '100%',
+              height: '100%',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              opacity: imgLoading ? 0 : 1,
+              transition: 'opacity 0.2s',
+              position: 'absolute',
+              top: 0, left: 0
+            }}
+          />
+          {imgLoading && (
+            <FaSpinner className="spinning" size={40} color="#0ea300" style={{ position: 'absolute' }} />
+          )}
+        </>
+      ) : (
+        <FaUserCircle size={80} color="#0ea300" style={{ background: '#fff', borderRadius: '50%' }} />
+      )}
+      <div
+        className="avatar-overlay"
+        style={{
+          position: 'absolute',
+          top: 0, left: 0, width: '100%', height: '100%',
+          background: 'rgba(0,0,0,0.15)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: hover ? 1 : 0, transition: 'opacity 0.3s',
+        }}
+      >
+        <FaCamera size={24} color="#fff" />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const InfoContainer = ({ userInfo, handleClick }) => {
   const { logout } = useAuth();
@@ -53,11 +104,30 @@ const InfoContainer = ({ userInfo, handleClick }) => {
     <div className="info-container">
       <div className="header-wrapper">
         <h1>{userInfo.Profile?.nick_name || userInfo.Profile?.user_name}</h1>
-        <button className="edit-profile-btn" onClick={handleClick}>
+        <button className="edit-profile-btn" onClick={handleClick} style={{
+          background: '#f8faf8',
+          border: 'none',
+          borderRadius: 8,
+          padding: '8px 16px',
+          marginRight: 8,
+          fontWeight: 500,
+          boxShadow: '0 2px 8px rgba(14,163,0,0.04)',
+          cursor: 'pointer',
+          transition: 'all 0.2s',
+        }}>
           <FaPencilAlt size={14} />
-          <span>Edit Profile</span>
+          <span style={{ marginLeft: 6 }}>Edit Profile</span>
         </button>
-        <button className="logout-btn" onClick={handleLogout}>
+        <button className="logout-btn" onClick={handleLogout} style={{
+          background: '#f8faf8',
+          border: 'none',
+          borderRadius: 8,
+          padding: '8px 16px',
+          fontWeight: 500,
+          boxShadow: '0 2px 8px rgba(14,163,0,0.04)',
+          cursor: 'pointer',
+          transition: 'all 0.2s',
+        }}>
           <FaSignOutAlt size={18} color="#888" />
         </button>
       </div>

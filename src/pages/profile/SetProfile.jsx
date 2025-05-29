@@ -38,6 +38,8 @@ export const SetProfile = (props) => {
     const [isChanged, setIsChanged] = useState(false);
     
     const fileInputRef = useRef(null);
+    // 이미지 URL 생성 함수
+    const [imgError, setImgError] = useState(false);
 
     // ESC 키를 눌렀을 때 모달 닫기
     useEffect(() => {
@@ -219,6 +221,7 @@ export const SetProfile = (props) => {
             
             // 이미지 업로드 처리 (필요한 경우)
             let uploadedImageFileName = null;
+            let imageUploadSuccess = false;
             
             if (selectedFile) {
                 const formDataFile = new FormData();
@@ -229,10 +232,11 @@ export const SetProfile = (props) => {
                             'Content-Type': 'multipart/form-data'
                         }
                     });
-                    
-                    if (uploadResponse.data && uploadResponse.data.filename) {
-                        uploadedImageFileName = uploadResponse.data.filename;
+                    // 반드시 profileImage 키로 받기
+                    if (uploadResponse.data && uploadResponse.data.profileImage) {
+                        uploadedImageFileName = uploadResponse.data.profileImage;
                         setProfileImage(uploadedImageFileName);
+                        imageUploadSuccess = true;
                     }
                 } catch (uploadError) {
                     console.error('이미지 업로드 실패:', uploadError);
@@ -263,31 +267,37 @@ export const SetProfile = (props) => {
             
             // 업로드한 이미지가 있으면 추가
             if (uploadedImageFileName) {
-                updateData.Profile.profile_image = uploadedImageFileName;
+                // profile/profile/파일명 중복 방지
+                if (uploadedImageFileName.startsWith('profile/')) {
+                    updateData.Profile.profile_image = uploadedImageFileName;
+                } else {
+                    updateData.Profile.profile_image = `profile/${uploadedImageFileName}`;
+                }
             }
             
             // 프로필 정보 업데이트 요청
-            const updateResponse = await api.patch(`/api/user/updateUser/${userId}`, updateData);
+            let patchSuccess = false;
+            try {
+                const updateResponse = await api.patch(`/api/user/updateUser/${userId}`, updateData);
+                if (updateResponse.status === 200 || updateResponse.status === 201) {
+                    patchSuccess = true;
+                }
+            } catch (patchError) {
+                console.error('프로필 PATCH 실패:', patchError);
+                // PATCH 실패여도 아래에서 처리
+            }
             
-            if (updateResponse.status === 200 || updateResponse.status === 201) {
-                console.log('프로필 업데이트 성공:', updateResponse.data);
+            if (patchSuccess || imageUploadSuccess) {
                 alert('프로필이 성공적으로 업데이트되었습니다.');
-                
-                // 성공 시 변경 상태 초기화
                 setIsChanged(false);
-                
-                // 모달 닫기 (선택적)
                 if (setHandleTogle) {
                     setHandleTogle(false);
                 }
-                
-                // 페이지 새로고침
                 setTimeout(() => {
                     window.location.reload();
-                }, 500); // 0.5초 후 새로고침 (알림이 표시된 후)
+                }, 500);
             } else {
-                console.warn('프로필 업데이트 응답이 예상과 다릅니다:', updateResponse);
-                alert('프로필 업데이트가 완료되었지만 응답이 예상과 다릅니다.');
+                alert('프로필 업데이트에 실패했습니다. 나중에 다시 시도해주세요.');
             }
         } catch (error) {
             console.error('업데이트 실패:', error);
@@ -347,10 +357,18 @@ export const SetProfile = (props) => {
                         <div 
                             className={styles.profileImage} 
                             onClick={handleImageClick}
-                            style={getImageUrl() ? { backgroundImage: `url(${getImageUrl()})` } : {}}
+                            style={getImageUrl() && !imgError ? { backgroundImage: `url(${getImageUrl()})` } : {}}
                         >
-                            {!getImageUrl() && (
+                            {(!getImageUrl() || imgError) && (
                                 <FaUserCircle size={60} color="#0ea300" className={styles.defaultAvatar} />
+                            )}
+                            {getImageUrl() && !imgError && (
+                                <img
+                                    src={getImageUrl()}
+                                    alt="프로필"
+                                    style={{ display: 'none' }}
+                                    onError={() => setImgError(true)}
+                                />
                             )}
                             {isUploading ? (
                                 <div className={styles.uploadingOverlay}>
