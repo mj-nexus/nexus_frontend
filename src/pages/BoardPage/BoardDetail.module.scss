@@ -41,16 +41,18 @@
 
       .stats {
         display: flex;
+        align-items: center;
         gap: 1rem;
+        color: #666;
+        font-size: 0.9rem;
 
-        span {
+        i {
+          margin-right: 0.5rem;
+        }
+
+        .reportButton {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-
-          i {
-            font-size: 1.1rem;
-          }
         }
       }
     }

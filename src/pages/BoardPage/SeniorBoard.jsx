@@ -9,6 +9,7 @@ import {
     PostcardNote
 } from '../../components/Memo/styles';
 import { seniorBoardService } from '../../services/seniorBoardService';
+import { ReportButton } from '../../components/Report/ReportButton';
 import api from '../../api/axiosInstance';
 
 const NOTE_TYPE_MAP = {
@@ -115,22 +116,29 @@ export const SeniorBoard = () => {
                                 <MemoComponent
                                     key={memo.id}
                                     bgColor={memo.note_color}
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => navigate(`/board/senior/${memo.id}`)}
+                                    style={{ cursor: 'pointer', position: 'relative' }}
                                 >
-                                    <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>{memo.title}</div>
-                                    <div style={{ fontSize: 15, color: '#222', whiteSpace: 'pre-line', overflow: 'hidden', textOverflow: 'ellipsis', maxHeight: 90 }}>{memo.content}</div>
-                                    <div style={{ fontSize: 13, color: '#888', marginTop: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                                        {(() => {
-                                            const studentId = memo.User?.student_id;
-                                            const year = studentId && studentId.length >= 4 ? studentId.slice(2, 4) : null;
-                                            const company = memo.User?.Profile?.company || '-';
-                                            return (
-                                                <span>
-                                                    {year ? `${year}학번` : '-'} {memo.writer} {company}
-                                                </span>
-                                            );
-                                        })()}
+                                    <div 
+                                        onClick={() => navigate(`/board/senior/${memo.id}`)}
+                                        style={{ height: '100%' }}
+                                    >
+                                        <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>{memo.title}</div>
+                                        <div style={{ fontSize: 15, color: '#222', whiteSpace: 'pre-line', overflow: 'hidden', textOverflow: 'ellipsis', maxHeight: 90 }}>{memo.content}</div>
+                                        <div style={{ fontSize: 13, color: '#888', marginTop: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                            {(() => {
+                                                const studentId = memo.User?.student_id;
+                                                const year = studentId && studentId.length >= 4 ? studentId.slice(2, 4) : null;
+                                                const company = memo.User?.Profile?.company || '-';
+                                                return (
+                                                    <span>
+                                                        {year ? `${year}학번` : '-'} {memo.writer} {company}
+                                                    </span>
+                                                );
+                                            })()}
+                                        </div>
+                                    </div>
+                                    <div style={{ position: 'absolute', top: 8, right: 8 }}>
+                                        <ReportButton boardType="senior_board" postId={memo.id} />
                                     </div>
                                 </MemoComponent>
                             );

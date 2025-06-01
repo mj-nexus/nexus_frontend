@@ -6,6 +6,7 @@ import { formatDate } from '../../utils/dateFormattingUtil';
 import styles from './BoardDetail.module.scss';
 import writerCheck from '../../utils/boardUtil';
 import CommentList from '../../components/Comment/CommentList';
+import { ReportButton } from '../../components/Report/ReportButton';
 
 export const BoardDetail = () => {
     const { id } = useParams();
@@ -76,6 +77,11 @@ export const BoardDetail = () => {
                             <i className="fas fa-eye"></i>
                             조회 {board.views}
                         </span>
+                        {!isWriter && (
+                            <span className={styles.reportButton}>
+                                <ReportButton boardType="board" postId={id} />
+                            </span>
+                        )}
                     </div>
                 </div>
             </div>

@@ -181,9 +181,16 @@ export const BoardList = ({
                         </tr>
                     ) : (
                         boardData.map((post, index) => (
-                            <tr key={post.id || `post-${index}`} onClick={() => navigate(`/board/${post.board_id}`)}>
+                            <tr key={post.id || `post-${index}`}>
                                 <td className={styles.tag} data-label="말머리">{post.tag}</td>
-                                <td className={styles.title} data-label="제목">{post.title}</td>
+                                <td 
+                                    className={styles.title} 
+                                    data-label="제목"
+                                    onClick={() => navigate(`/board/${post.board_id}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {post.title}
+                                </td>
                                 <td data-label="작성자">{post.writer}</td>
                                 <td data-label="조회수">{post.views}</td>
                                 <td data-label="작성일">{formatDate(post.regdate)}</td>

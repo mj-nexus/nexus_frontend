@@ -170,6 +170,20 @@
           }
         }
       }
+
+      .actions {
+        text-align: center;
+        white-space: nowrap;
+        
+        @media (max-width: 768px) {
+          &::before {
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+        }
+      }
     }
   }
 

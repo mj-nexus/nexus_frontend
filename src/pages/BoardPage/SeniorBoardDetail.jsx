@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { seniorBoardService } from '../../services/seniorBoardService';
 import { formatDate } from '../../utils/dateFormattingUtil';
+import { ReportButton } from '../../components/Report/ReportButton';
 import {
   Note,
   GridNote,
@@ -143,6 +144,11 @@ const SeniorBoardDetail = () => {
           })()}
           <span style={{ fontSize: 15, color: '#c2b280', marginTop: 2 }}>
             {formatDate(board.regdate)} · 조회 {board.views}
+            {!isWriter && (
+              <span style={{ marginLeft: 8, display: 'inline-flex', alignItems: 'center' }}>
+                <ReportButton boardType="senior_board" postId={id} />
+              </span>
+            )}
           </span>
         </div>
         <div style={{

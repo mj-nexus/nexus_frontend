@@ -12,6 +12,7 @@ import { boardService } from '../../services/boardService';
 const PopularPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPopularPosts = async () => {
@@ -42,6 +43,14 @@ const PopularPosts = () => {
     fetchPopularPosts();
   }, []);
 
+  const handlePostClick = (post) => {
+    if (post._boardType === 'senior') {
+      navigate(`/board/senior/${post.id || post.board_id}`);
+    } else {
+      navigate(`/board/${post.id || post.board_id}`);
+    }
+  };
+
   if (loading) return <div className={styles.loading}>로딩 중...</div>;
 
   return (
@@ -53,7 +62,12 @@ const PopularPosts = () => {
       <div className={styles.cardContent}>
         <ul className={styles.postList}>
           {posts.map((post) => (
-            <li key={post.id || post.board_id} className={styles.postItem}>
+            <li 
+              key={post.id || post.board_id} 
+              className={styles.postItem}
+              onClick={() => handlePostClick(post)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className={styles.postCategory}>
                 {post._boardType === 'senior' ? '선배게시판' : '학생게시판'}
               </div>
@@ -70,7 +84,7 @@ const PopularPosts = () => {
         </ul>
       </div>
       <div className={styles.cardFooter}>
-        <button className={styles.moreButton} onClick={() => window.location.href = '/board'}>더보기</button>
+        <button className={styles.moreButton} onClick={() => navigate('/board')}>더보기</button>
       </div>
     </div>
   );
